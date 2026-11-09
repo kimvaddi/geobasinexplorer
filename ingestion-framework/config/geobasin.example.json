@@ -1,0 +1,21 @@
+{
+  "workspace_id": "<fabric-workspace-id>",
+  "lakehouse_name": "geobasin_ontology_lh",
+  "ontology_name": "geobasin_knowledge",
+  "ontology_description": "Knowledge ontology of Australian sedimentary basins, wells, rock units, plays, structures, measurements and sources, generated from public geoscience data by the reusable ingestion framework.",
+  "graph_model_name": "geobasin_graph",
+  "landing_root": "../build/landing",
+  "output_dir": "../build/output",
+  "raw_schema": "raw",
+  "binding_schema": "dbo",
+  "notebooks": {
+    "prepare": "geobasin_knowledge prepare",
+    "generate": "geobasin_knowledge generate"
+  },
+  "mcp_smoke": {
+    "name": "list_ontology_entities",
+    "arguments": {
+      "entityName": "Basin"
+    }
+  }
+}

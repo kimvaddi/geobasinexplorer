@@ -1,0 +1,50 @@
+{
+  "name": "geobasin-explorer-ai",
+  "private": true,
+  "version": "0.8.0",
+  "description": "Map-first geoscience prototype on public Australian basin data. Builds to one offline HTML file.",
+  "type": "module",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc -p tsconfig.app.json --noEmit",
+    "build": "vite build && node scripts/inline-single-file.mjs",
+    "build:cloud": "tsc -p tsconfig.app.json --noEmit && vite build --mode cloud",
+    "preview": "vite preview",
+    "test:answers": "node ../tools/run-ts.mjs ../tests/answers/entry.ts ../tests/answers/questions.json",
+    "test:e2e": "node ../tests/e2e/smoke.mjs dist/geobasin-explorer-ai.html",
+    "kits": "python3 ../ingestion-framework/tools/make_bundle.py --out ../build/bundle"
+  },
+  "dependencies": {
+    "@fontsource-variable/geist": "5.2.8",
+    "@tanstack/react-query": "5.100.6",
+    "azure-maps-control": "3.7.4",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "lucide-react": "1.14.0",
+    "motion": "12.38.0",
+    "radix-ui": "1.6.0",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "react-router-dom": "7.18.4",
+    "sonner": "2.0.7",
+    "tailwind-merge": "3.5.0",
+    "tailwindcss": "4.2.4",
+    "tw-animate-css": "1.4.0",
+    "unpdf": "1.6.2",
+    "xlsx": "0.18.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.2.4",
+    "@types/node": "24.13.2",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "5.2.0",
+    "esbuild": "0.27.7",
+    "playwright": "1.58.2",
+    "typescript": "5.8.3",
+    "vite": "7.3.5"
+  }
+}

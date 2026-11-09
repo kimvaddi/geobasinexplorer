@@ -1,0 +1,8 @@
+{
+  "files": [],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "@/*": ["./src/*"], "@brand": ["./src/brand/geobasin/index.ts"], "@brand/*": ["./src/brand/geobasin/*"] }
+  },
+  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
+}

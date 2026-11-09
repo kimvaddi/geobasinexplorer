@@ -1,0 +1,211 @@
+name: CI
+
+# Runs on every push and pull request. Nothing here deploys or touches Azure; deployments run from an operator's
+# workstation with infra/scripts/deploy.sh (docs/DEPLOYMENT.md) until you wire a workload identity into a release pipeline.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  app:
+    name: App (offline and cloud builds, answer checks, offline browser test)
+    # Pinned: ubuntu-latest moved to 26.04, which Playwright 1.58 doesn't support for Chromium yet.
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            app/package-lock.json
+            services/api/package-lock.json
+      - name: Install from the lockfile
+        run: npm ci
+      # The cloud panels type-check against the shared live contracts in services/api (types and constants only;
+      # nothing from the API's server packages is bundled into the browser), so its packages must be installed too.
+      - name: Install the API's packages for the shared contracts
+        run: npm ci
+        working-directory: services/api
+      - name: Type-check
+        run: npm run typecheck
+      - name: Build the single offline file
+        run: npm run build
+      - name: The offline file never includes the cloud map SDK or the Esri relay
+        run: |
+          if grep -q "atlas.microsoft.com" dist/geobasin-explorer-ai.html; then echo "Azure Maps found in the offline file"; exit 1; fi
+          if grep -q -E "arcgis\.com|/api/basemap/" dist/geobasin-explorer-ai.html; then echo "Esri base maps found in the offline file"; exit 1; fi
+      - name: Build the cloud UI
+        run: npm run build:cloud
+      - name: Answers cite a source or say not found
+        run: npm run test:answers
+      - name: Offline browser test (no network allowed)
+        run: |
+          npx playwright install --with-deps chromium
+          npm run test:e2e
+      - name: Keep the offline file
+        uses: actions/upload-artifact@v4
+        with:
+          name: geobasin-explorer-ai-html
+          path: app/dist/geobasin-explorer-ai.html
+
+  api:
+    name: Cloud service (type-check and bundle)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            app/package-lock.json
+            services/api/package-lock.json
+      - name: Install the app's dependencies (the service bundles the app's library code)
+        run: npm ci
+        working-directory: app
+      - name: Install the service's dependencies
+        run: npm ci
+        working-directory: services/api
+      - name: Type-check
+        run: npm run typecheck
+        working-directory: services/api
+      - name: Bundle the server, worker and evaluation job
+        run: npm run build
+        working-directory: services/api
+      - name: Esri base-map relay (credits, header-only key, tile checks, block booking)
+        run: node build.mjs --script src/esri.test.ts && node --test dist/scripts/esri.test.mjs
+        working-directory: services/api
+      - name: Data scope (a second site's counters, reviews and feedback stay apart from the main app's)
+        run: node build.mjs --script src/data-scope.test.ts && node --test dist/scripts/data-scope.test.mjs
+        working-directory: services/api
+      - name: Planetary Computer overlay relay (listed layers only, checks before booking, empty tiles outside the data, area summaries, failures)
+        run: node build.mjs --script src/planetary.test.ts && node --test dist/scripts/planetary.test.mjs
+        working-directory: services/api
+      - name: Drawn areas (outline checks shared with the browser, sphere measures, counts at known wells, counterclockwise search polygon)
+        run: node build.mjs --script src/area.test.ts && node --test dist/scripts/area.test.mjs
+        working-directory: services/api
+      - name: Tool server (MCP handshake, caller allowlist, run tickets, the run's evidence register)
+        run: node build.mjs --script src/v2/tool-server.test.ts && node --test dist/scripts/tool-server.test.mjs
+        working-directory: services/api
+      - name: Co-Scientist (runs bound to their person, delegated identity, the app's source and number gate)
+        run: node build.mjs --script src/v2/cosci.test.ts && node --test dist/scripts/cosci.test.mjs
+        working-directory: services/api
+      - name: Copilot (gbx-copilot runs bound to their person, polling, cited answers, required live sources)
+        run: node build.mjs --script src/v2/copilot.test.ts && node --test dist/scripts/copilot.test.mjs
+        working-directory: services/api
+      - name: Knowledge tools (typed GQL over the Fabric graph, cleaned names, K records, paused-capacity notice)
+        run: node build.mjs --script src/v2/knowledge.test.ts && node --test dist/scripts/knowledge.test.mjs
+        working-directory: services/api
+      - name: Prepared-answer checks reused while nothing they judged has changed (verdict cache)
+        run: node build.mjs --script src/verdict-cache.test.ts && node --test dist/scripts/verdict-cache.test.mjs
+        working-directory: services/api
+
+  spatial:
+    name: GDAL/PROJ spatial service (image builds only if the reference fixture still holds)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the image (asserts 260.41 km and 464 boreholes)
+        run: docker build -f services/spatial/Dockerfile -t gbx-spatial:ci .
+
+  api-image:
+    name: Cloud image (builds through the real Docker context)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build services/api/Dockerfile from the repository root, as az acr build does
+        run: docker build -f services/api/Dockerfile -t gbx-api:ci .
+
+  scanner:
+    name: ClamAV scanner (hash-locked image build and unit tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the image from official PyPI with every hash checked
+        run: docker build --platform linux/amd64 -t gbx-scanner:ci services/scanner
+      - name: Unit tests inside the image, without network
+        run: |
+          docker run --rm --network none --entrypoint python3 \
+            -v "$PWD/services/scanner/test_scan.py:/app/test_scan.py:ro" \
+            -v "$PWD/services/scanner/test_pipeline.py:/app/test_pipeline.py:ro" \
+            gbx-scanner:ci -m unittest -q test_scan test_pipeline
+
+  ingestion-framework:
+    name: Ontology ingestion framework (offline tests)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ingestion-framework
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install the framework with its Delta and test extras
+        run: python -m pip install -e '.[delta,test]'
+      - name: Tests (sockets and Azure CLI sign-ins are blocked; tests that need the GeoBasin data bundle skip)
+        run: python -m pytest
+
+  scientists:
+    name: Scientist agents (offline workflow tests)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/scientists
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install the pinned package with its test extras
+        run: python -m pip install -e '.[test]'
+      - name: Tests (scripted models and evidence; no network)
+        run: python -m pytest
+
+  terraform:
+    name: Terraform (format and validate; no Azure access)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra/terraform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - name: Format
+        run: terraform fmt -check -recursive
+      - name: Validate
+        run: |
+          terraform init -backend=false -input=false
+          terraform validate
+
+  infra-and-hygiene:
+    name: Bicep templates and repository hygiene
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile every Bicep template
+        run: |
+          az bicep install
+          for f in $(find infra/bicep -name '*.bicep' -not -path '*/modules/*' | sort); do az bicep build --file "$f" --stdout > /dev/null; echo "ok $f"; done
+      - name: Scripts parse
+        run: |
+          for f in infra/scripts/*.sh; do bash -n "$f"; echo "ok $f"; done
+          node --check tests/e2e/cloud-map.mjs
+          node --check tests/e2e/smoke.mjs
+          python3 -m py_compile services/spatial/server.py infra/scripts/*.py services/scientists/deploy_hosted.py services/scanner/scan.py pipeline/*.py
+      - name: The content phase reads every registered source and sorts it into fetched or hand-landed
+        run: |
+          GBX_LIVE_SOURCES="$(sed -n 's/^GBX_LIVE_SOURCES=//p' infra/config/environment.example.env)" python3 infra/scripts/live_content.py plan
+      - name: No withheld source content (fingerprints only)
+        run: node tools/check-public-data.mjs
+      - name: No secrets in tracked files
+        run: |
+          if git grep -n -I -E "gh[pousr]_[A-Za-z0-9]{20,}|AccountKey=|SharedAccessSignature|-----BEGIN [A-Z ]*PRIVATE KEY|client_secret\s*[:=]\s*['\"][A-Za-z0-9~._-]{20,}" -- . ':!*.html' ':!.github/workflows/ci.yml'; then echo "Possible secret found"; exit 1; fi

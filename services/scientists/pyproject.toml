@@ -1,0 +1,29 @@
+[project]
+name = "gbx-scientists"
+version = "0.1.0"
+description = "GeoBasin Explorer AI version 2: the scientist squad as Microsoft Agent Framework workflows hosted in Microsoft Foundry"
+requires-python = ">=3.11"
+# Agent Framework's Foundry hosting integration is prerelease, so every package is pinned and upgrades are tested first
+# (docs/v2/FOUNDRY_AGENTS.md, Risks).
+dependencies = [
+  "agent-framework-core==1.25.0",
+  "agent-framework-foundry==1.16.1",
+  "agent-framework-foundry-hosting==1.0.0b261106",
+  "azure-identity==1.27.0",
+  "mcp==2.3.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest==9.2.0", "pytest-asyncio==1.4.1"]
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["gbx_scientists"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "strict"
+asyncio_default_fixture_loop_scope = "function"

@@ -1,0 +1,10 @@
+{
+  "subscriptionId": "<subscription-id>",
+  "resourceGroup": "<resource-group-of-the-foundry-account>",
+  "account": "<foundry-account-name>",
+  "project": "<foundry-project-name>",
+  "connectionName": "fabriciq-geobasin-knowledge",
+  "agentName": "gbx-ontology-explorer",
+  "model": "gbx-answer",
+  "serverLabel": "geobasin-ontology"
+}

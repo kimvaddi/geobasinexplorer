@@ -1,0 +1,9 @@
+model Model
+
+ref table node
+ref table rel_part_of
+
+ref entity 'O''Brien Node'
+
+ref namespace default
+

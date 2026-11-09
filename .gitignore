@@ -1,0 +1,33 @@
+node_modules/
+dist/
+source-data/
+tests/e2e/shots/
+.vite/
+*.log
+.DS_Store
+Thumbs.db
+dist-cloud/
+.env
+.env.*
+__pycache__/
+.phase1a-validation/
+.slice-1a-browser-*/
+.live-ui-*/
+
+# Local deployment settings, written by infra/scripts/deploy.sh or copied from the examples
+infra/config/environment.env
+infra/config/environment.generated.env
+ingestion-framework/config/geobasin.json
+ingestion-framework/config/geobasin-foundry.json
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+.terraform.lock.hcl.bak
+
+# Terraform
+*.tfvars
+!*.tfvars.example
+.pytest_cache/
+.pytest-cache/
+.run-ts-*/

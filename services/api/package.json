@@ -1,0 +1,36 @@
+{
+  "name": "geobasin-explorer-ai-api",
+  "version": "0.13.49",
+  "private": true,
+  "description": "GeoBasin Explorer AI cloud service: serves the cloud build of the app and its API on Azure Container Apps.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "start": "node dist/server.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "script": "node build.mjs --script"
+  },
+  "dependencies": {
+    "@azure-rest/ai-document-intelligence": "1.1.0",
+    "@azure/ai-projects": "2.10.0",
+    "@azure/data-tables": "13.3.2",
+    "@azure/identity": "4.14.1",
+    "@azure/monitor-opentelemetry": "1.20.1",
+    "@azure/search-documents": "13.0.0",
+    "@azure/storage-blob": "12.34.0",
+    "@azure/storage-queue": "12.32.0",
+    "@fastify/multipart": "10.1.6",
+    "@fastify/static": "10.1.7",
+    "fastify": "5.12.7",
+    "openai": "7.43.0",
+    "unpdf": "1.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "esbuild": "0.28.2",
+    "typescript": "5.8.3"
+  }
+}

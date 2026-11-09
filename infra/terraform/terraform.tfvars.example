@@ -1,0 +1,34 @@
+# Copy to terraform.tfvars (git ignores *.tfvars except this example) and fill in. Secrets go in environment variables:
+#   export TF_VAR_site_app_secret=...   # client secret of the sign-in registration (infra/scripts/site-signin.sh)
+#   export TF_VAR_run_ticket_key="$(openssl rand -base64 32)"
+subscription_id        = "<subscription id>"
+agents_subscription_id = ""   # optional second subscription for the version 2 Foundry account and Fabric
+location               = "westus3"
+maps_location          = "westus2"
+operator_object_id     = "<object id: az ad signed-in-user show --query id -o tsv>"
+alert_email            = "<alerts@your-domain>"
+budget_start_date      = "2026-01-01T00:00:00Z"   # the first day of the current or a later month
+dns_zone               = "<geobasin.your-domain.com>"
+site_host              = "<www.geobasin.your-domain.com>"
+
+fabric_capacity_name = "<gbxfabric01>"
+fabric_admins        = ["<admin@your-domain.com>"]
+
+# Second apply, after the images exist (infra/scripts/deploy-platform.sh build prints the tag):
+deploy_workloads = false
+release_tag      = ""
+site_app_id      = ""
+live_sources     = ""   # infra/config/environment.example.env lists the public sources
+live_route       = "all"
+
+# After the ingestion framework has built the ontology and graph (infra/scripts/deploy.sh knowledge):
+fabric_workspace_id   = ""
+fabric_ontology_id    = ""
+fabric_graph_model_id = ""
+
+# After the hosted agents exist (python3 services/scientists/deploy_hosted.py --identities):
+agent_identities = []
+
+# Once the site runs; cut over after both domains validate and the Private Link connection is approved:
+deploy_edge  = false
+edge_cutover = false

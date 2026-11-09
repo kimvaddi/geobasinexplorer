@@ -1,0 +1,9 @@
+relationship rel_part_of__from
+	fromColumn: rel_part_of.source_id
+	toColumn: node.id
+
+relationship rel_part_of__to
+	isActive: false
+	fromColumn: rel_part_of.target_id
+	toColumn: node.id
+

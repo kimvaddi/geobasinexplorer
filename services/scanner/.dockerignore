@@ -1,0 +1,4 @@
+*
+!Dockerfile
+!scan.py
+!requirements.lock.txt

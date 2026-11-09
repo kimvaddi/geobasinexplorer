@@ -1,0 +1,35 @@
+/// A node.
+/// A second description line.
+entity 'O''Brien Node'
+	lineageTag: 2fa467b1-fb2b-557f-b592-7b6f63310d86
+	backingTable: node
+	keyProperty: id
+
+	/// The unique key.
+	property id
+		dataType: string
+		lineageTag: 2fb550a8-427c-5338-834d-47a3f4cb59da
+
+		backingConfiguration
+			valueColumn: node.id
+
+	/// The display name.
+	property label
+		dataType: string
+		lineageTag: 6dc230a4-5ad0-5c1d-9014-6fb395018d26
+
+		backingConfiguration
+			valueColumn: node.label
+
+	/// An observation count.
+	property count
+		dataType: int64
+		lineageTag: 7af1d2f3-0fef-5fa8-9e93-c2d43cb09211
+
+		backingConfiguration
+			valueColumn: node.count
+
+	synonym 'Test node'
+
+	synonym vertex
+

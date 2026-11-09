@@ -1,0 +1,238 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@fontsource-variable/geist";
+
+@custom-variant data-open {
+  &:where([data-state="open"]),
+  &:where([data-open]:not([data-open="false"])) { @slot; }
+}
+@custom-variant data-closed {
+  &:where([data-state="closed"]),
+  &:where([data-closed]:not([data-closed="false"])) { @slot; }
+}
+@custom-variant data-checked {
+  &:where([data-state="checked"]),
+  &:where([data-checked]:not([data-checked="false"])) { @slot; }
+}
+@custom-variant data-unchecked {
+  &:where([data-state="unchecked"]),
+  &:where([data-unchecked]:not([data-unchecked="false"])) { @slot; }
+}
+@custom-variant data-selected {
+  &:where([data-selected="true"]) { @slot; }
+}
+@custom-variant data-disabled {
+  &:where([data-state="disabled"]),
+  &:where([data-disabled]:not([data-disabled="false"])) { @slot; }
+}
+@custom-variant data-active {
+  &:where([data-state="active"]),
+  &:where([data-active]:not([data-active="false"])) { @slot; }
+}
+@custom-variant data-horizontal {
+  &:where([data-orientation="horizontal"]) { @slot; }
+}
+@custom-variant data-vertical {
+  &:where([data-orientation="vertical"]) { @slot; }
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: #0F2B3D;
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.53 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: #0F2B3D;
+  --radius: 0.75rem;
+  --chart-1: oklch(0.47 0.16 265);
+  --chart-2: oklch(0.6 0.1 184.704);
+  --chart-3: oklch(0.58 0.14 245);
+  --chart-4: oklch(0.62 0.12 84.429);
+  --chart-5: oklch(0.6 0.15 0);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.47 0.16 265);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.47 0.16 265);
+  /* Brand chrome. A brand pack (src/brand/<name>/theme.css) overrides these; the values here are the GeoBasin look.
+     Evidence, status and map-data colours carry meaning, not branding, so they stay out of this list. */
+  --brand: #0F2B3D;
+  --brand-hover: #133A52;
+  --brand-bar: #0C2433;
+  --brand-stage: #061520;
+  --brand-accent: transparent;
+  --brand-highlight: #C2410C;
+  --header: #0F2B3D;
+  --header-foreground: #FFFFFF;
+  --copilot-surface: #0A1A20;
+  --copilot-50: oklch(98.4% 0.014 180.72);
+  --copilot-100: oklch(95.3% 0.051 180.801);
+  --copilot-200: oklch(91% 0.096 180.426);
+  --copilot-300: oklch(85.5% 0.138 181.071);
+  --copilot-ink: #062027;
+  --brand-font: 'Geist Variable', sans-serif;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  margin: 0;
+}
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: var(--brand-font);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-bar: var(--brand-bar);
+  --color-brand-stage: var(--brand-stage);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-highlight: var(--brand-highlight);
+  --color-header: var(--header);
+  --color-header-foreground: var(--header-foreground);
+  --color-copilot-surface: var(--copilot-surface);
+  --color-copilot-50: var(--copilot-50);
+  --color-copilot-100: var(--copilot-100);
+  --color-copilot-200: var(--copilot-200);
+  --color-copilot-300: var(--copilot-300);
+  --color-copilot-ink: var(--copilot-ink);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.63 0.16 265);
+  --primary-foreground: oklch(0.15 0.01 265);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.63 0.16 265);
+  --chart-1: oklch(0.63 0.16 265);
+  --chart-2: oklch(0.8 0.16 135);
+  --chart-3: oklch(0.9 0.15 95);
+  --chart-4: oklch(0.82 0.13 195);
+  --chart-5: oklch(0.72 0.16 340);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.63 0.16 265);
+  --sidebar-primary-foreground: oklch(0.15 0.01 265);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.63 0.16 265);
+}
+
+:root { color-scheme: light; }
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+/* Guided walkthrough: highlight the part of the screen the current step talks about. */
+.tour-spot {
+  outline: 3px solid var(--brand-highlight);
+  outline-offset: 3px;
+  border-radius: 0.75rem;
+  scroll-margin: 5rem;
+  animation: tour-spot-pulse 1.4s ease-in-out 3;
+}
+@keyframes tour-spot-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand-highlight) 45%, transparent); }
+  50% { box-shadow: 0 0 0 10px color-mix(in srgb, var(--brand-highlight) 0%, transparent); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tour-spot { animation: none; }
+}
+/* While the edge of a panel is dragged, the resize cursor shows everywhere and no text is selected. */
+html.gbx-resizing, html.gbx-resizing * { cursor: col-resize !important; user-select: none !important; }
+/* The window on the map (map-window.tsx) moves by its header, and while it is moved or resized its cursor shows
+   everywhere and no text is selected. */
+[data-gbx-map-window] [data-window-drag] { cursor: grab; touch-action: none; }
+[data-gbx-map-window] [data-window-drag] :is(button, a, input, select, textarea, summary, [role="button"]):not([data-window-grip]) { cursor: pointer; }
+html[data-gbx-drag], html[data-gbx-drag] * { user-select: none !important; }
+html[data-gbx-drag="move"], html[data-gbx-drag="move"] * { cursor: move !important; }
+html[data-gbx-drag="ew"], html[data-gbx-drag="ew"] * { cursor: ew-resize !important; }
+html[data-gbx-drag="ns"], html[data-gbx-drag="ns"] * { cursor: ns-resize !important; }
+html[data-gbx-drag="nwse"], html[data-gbx-drag="nwse"] * { cursor: nwse-resize !important; }
+html[data-gbx-drag="nesw"], html[data-gbx-drag="nesw"] * { cursor: nesw-resize !important; }

@@ -1,0 +1,20 @@
+table rel_part_of
+	lineageTag: 6c499eba-8304-5d3e-b0d4-eee465cf2531
+
+	column source_id
+		dataType: string
+		lineageTag: 76c86e37-0bcd-5499-a108-9c9d4dfe8324
+		sourceColumn: source_id
+
+	column target_id
+		dataType: string
+		lineageTag: 4ddfd0f0-318b-5757-8ed8-90a8dbc5891c
+		sourceColumn: target_id
+
+	partition rel_part_of = entity
+		mode: directLake
+		source
+			entityName: rel_part_of
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+

@@ -1,0 +1,7 @@
+// The second evaluation question in README.md: the five deepest wells inside the Galilee Basin outline.
+// label, year and type are escaped with backticks because GQL reserves those words.
+MATCH (w:Wellbore)-[:locatedIn]->(b:Basin)
+WHERE b.id = 'basin:galilee'
+RETURN w.`label` AS well, w.total_depth_m AS total_depth_m, w.`year` AS drilled, w.`type` AS well_type
+ORDER BY total_depth_m DESC
+LIMIT 5

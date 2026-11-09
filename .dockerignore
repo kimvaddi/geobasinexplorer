@@ -1,0 +1,21 @@
+# Only what services/api/Dockerfile and services/spatial/Dockerfile need is sent to the registry build.
+*
+!app/package.json
+!app/package-lock.json
+!app/index.html
+!app/tsconfig.json
+!app/tsconfig.app.json
+!app/tsconfig.node.json
+!app/vite.config.ts
+!app/src
+!app/scripts/cloud-licence.ts
+!app/scripts/cloud-data.ts
+!tools/cloud-build.mjs
+!services/api/package.json
+!services/api/package-lock.json
+!services/api/build.mjs
+!services/api/tsconfig.json
+!services/api/src
+!services/api/scripts
+!tests/answers/questions.json
+!services/spatial/server.py

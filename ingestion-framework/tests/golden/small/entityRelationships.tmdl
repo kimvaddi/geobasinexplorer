@@ -1,0 +1,14 @@
+/// Connect a node to its parent.
+entityRelationship 'part of'
+	lineageTag: d0671006-8bfc-56e0-abf9-7f6359729d00
+	fromEntity: 'O''Brien Node'
+	toEntity: 'O''Brien Node'
+
+	backingConfiguration
+		type: table
+		table: rel_part_of
+		fromRelationship: rel_part_of__from
+		toRelationship: rel_part_of__to
+
+	synonym 'parent link'
+

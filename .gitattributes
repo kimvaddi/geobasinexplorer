@@ -1,0 +1,8 @@
+* text=auto eol=lf
+app/src/data/*.json linguist-generated=true -diff
+demo/*.html linguist-generated=true -diff
+docs/architecture/*.html linguist-generated=true -diff
+*.webp binary
+*.png binary
+*.xlsx binary
+*.pdf binary

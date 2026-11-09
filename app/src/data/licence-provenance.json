@@ -1,0 +1,329 @@
+{
+  "version": 1,
+  "text": [
+    {
+      "id": "marabooka:app-note:extraction-page-total",
+      "fingerprint": "edf4019758d7679b",
+      "sourceId": "sa-dem-core-2026",
+      "replacement": null,
+      "length": 129,
+      "prefixFingerprint": "2a4341860798a0c0"
+    },
+    {
+      "id": "marabooka:lowcarbon-note:injection-era",
+      "fingerprint": "01bbea783f09f43a",
+      "sourceId": "sa-dem-core-2026",
+      "replacement": null,
+      "length": 186,
+      "prefixFingerprint": "b879dec93cff46a3"
+    },
+    {
+      "id": "marabooka:lowcarbon-note:core-photo-provenance",
+      "fingerprint": "b645a895373a39a9",
+      "sourceId": "sa-dem-core-2026",
+      "replacement": null,
+      "length": 162,
+      "prefixFingerprint": "1bf0ff461f5ff0b6"
+    },
+    {
+      "id": "marabooka:lowcarbon-note:package-reading-total",
+      "fingerprint": "944e395dc25a1327",
+      "sourceId": "sa-dem-core-2026",
+      "replacement": null,
+      "length": 183,
+      "prefixFingerprint": "9e9f923f87e7d3fb"
+    },
+    {
+      "id": "marabooka:role",
+      "fingerprint": "7fa9dab983661527",
+      "sourceId": "sa-dem-core-2026",
+      "replacement": "Evidence from the retained Marabooka 1 well reports.",
+      "length": 94,
+      "prefixFingerprint": "ccc1de3979c786ab"
+    },
+    {
+      "id": "marabooka:headline",
+      "fingerprint": "611bc4d41cca71bf",
+      "sourceId": "sa-dem-core-2026",
+      "replacement": "Evidence from retained well reports is available.",
+      "length": 200,
+      "prefixFingerprint": "fa880fb66b3d8ca2"
+    },
+    {
+      "id": "marabooka:field:f11-toolachee:label",
+      "fingerprint": "041c097f4b390188",
+      "sourceId": "sa-dem-core-2026",
+      "replacement": "Top Toolachee Formation",
+      "length": 47,
+      "prefixFingerprint": "723e449e9657ca0e"
+    },
+    {
+      "id": "marabooka:finding:k4-spill:interpretation",
+      "fingerprint": "646c52c78a4002f5",
+      "sourceId": "sa-dem-core-2026",
+      "replacement": "Report maps independent closure with spill points directed into the higher Strzelecki Dome.",
+      "length": 135,
+      "prefixFingerprint": "1bf109461f6001b4"
+    },
+    {
+      "id": "marabooka:finding:k5-patchawarra:interpretation",
+      "fingerprint": "1c6ca0449b5bff42",
+      "sourceId": "sa-dem-core-2026",
+      "replacement": "Report offers Toolachee–Patchawarra communication as one possible explanation for the water-wet Patchawarra.",
+      "length": 160,
+      "prefixFingerprint": "1bf10b461f60051a"
+    },
+    {
+      "id": "marabooka:input:targetDepthM:label",
+      "fingerprint": "4539dccd2774a51a",
+      "sourceId": "sa-dem-core-2026",
+      "replacement": "top of the Toolachee Formation",
+      "length": 50,
+      "prefixFingerprint": "2e3d2080bbf9fe11"
+    },
+    {
+      "id": "benchmark:Q08:question",
+      "fingerprint": "3975e89fee7a97d9",
+      "sourceId": "gsq-cr000407",
+      "replacement": null,
+      "length": 102,
+      "prefixFingerprint": "8fe2a18237cc27fe"
+    },
+    {
+      "id": "benchmark:Q08:key",
+      "fingerprint": "8000423bb99a0198",
+      "sourceId": "gsq-cr000407",
+      "replacement": null,
+      "length": 50,
+      "prefixFingerprint": "89a92167f381b1d6"
+    },
+    {
+      "id": "benchmark:Q09:question",
+      "fingerprint": "ccbc9a06f3593923",
+      "sourceId": "gsq-cr000407",
+      "replacement": null,
+      "length": 88,
+      "prefixFingerprint": "84a7b7162f7f545d"
+    },
+    {
+      "id": "benchmark:Q09:key",
+      "fingerprint": "32ba44c4239745e5",
+      "sourceId": "gsq-cr000407",
+      "replacement": null,
+      "length": 94,
+      "prefixFingerprint": "8bd6c814417f1fe1"
+    },
+    {
+      "id": "starter:innamincka-dst10",
+      "fingerprint": "3da67f2f09d8621e",
+      "sourceId": "gsq-cr000407",
+      "replacement": null,
+      "length": 53,
+      "prefixFingerprint": "91e1aeb28475939a"
+    },
+    {
+      "id": "learning:Q09:trigger",
+      "fingerprint": "49236e9ea669de99",
+      "sourceId": "gsq-cr000407",
+      "replacement": null,
+      "length": 41,
+      "prefixFingerprint": "6a68801654927249"
+    },
+    {
+      "id": "learning:Q09:change",
+      "fingerprint": "f2ad35b3cc5d7ee2",
+      "sourceId": "gsq-cr000407",
+      "replacement": null,
+      "length": 49,
+      "prefixFingerprint": "99ca29f76ee0899a"
+    },
+    {
+      "id": "learning:Q09:effect",
+      "fingerprint": "ccbcd6f0faa0a2d7",
+      "sourceId": "gsq-cr000407",
+      "replacement": null,
+      "length": 30,
+      "prefixFingerprint": "7e87a58bd8cb9a95"
+    }
+  ],
+  "items": [
+    {
+      "id": "site:marabooka-1:stats",
+      "sources": [
+        "sa-dem-core-2026"
+      ],
+      "action": "recompute"
+    },
+    {
+      "id": "metric:Innamincka 1 existing OCR text: paragraphs / tables / page markers",
+      "sources": [
+        "gsq-cr000407"
+      ],
+      "action": "remove"
+    },
+    {
+      "id": "metric:Legacy report pages read for values",
+      "sources": [
+        "gsq-cr000407",
+        "sa-dem-core-2026"
+      ],
+      "action": "remove"
+    },
+    {
+      "id": "metric:Existing OCR text compared with values read from the page",
+      "sources": [
+        "gsq-cr000407"
+      ],
+      "action": "remove"
+    },
+    {
+      "id": "metric:Search passages from OCR text",
+      "sources": [
+        "gsq-cr000407"
+      ],
+      "action": "remove"
+    },
+    {
+      "id": "metric:Rebuild of the data pack from source files",
+      "sources": [
+        "gsq-cr000407",
+        "sa-dem-core-2026"
+      ],
+      "action": "remove"
+    },
+    {
+      "id": "metric:Reading legacy well values (Innamincka 1, Marabooka 1)",
+      "sources": [
+        "gsq-cr000407"
+      ],
+      "action": "remove"
+    },
+    {
+      "id": "metric:Measuring the Cooper guide and OCR text",
+      "sources": [
+        "gsq-cr000407"
+      ],
+      "action": "remove"
+    },
+    {
+      "id": "metric:Documents in the catalogue",
+      "sources": [
+        "gsq-cr000407"
+      ],
+      "action": "recompute"
+    },
+    {
+      "id": "metric:Values extracted from legacy scans",
+      "sources": [
+        "gsq-cr000407"
+      ],
+      "action": "recompute"
+    },
+    {
+      "id": "metric:Values flagged for review",
+      "sources": [
+        "gsq-cr000407"
+      ],
+      "action": "recompute"
+    },
+    {
+      "id": "metric:Knowledge-graph entities",
+      "sources": [
+        "gsq-cr000407"
+      ],
+      "action": "recompute"
+    },
+    {
+      "id": "catalogue:Legacy well report pages",
+      "sources": [
+        "gsq-cr000407"
+      ],
+      "action": "recompute"
+    },
+    {
+      "id": "catalogue:Values read from legacy scans (54)",
+      "sources": [
+        "gsq-cr000407"
+      ],
+      "action": "recompute"
+    },
+    {
+      "id": "catalogue:Knowledge-graph entities (292)",
+      "sources": [
+        "gsq-cr000407"
+      ],
+      "action": "recompute"
+    },
+    {
+      "id": "catalogue:Knowledge graph: units, plays, flags, wells, core photos",
+      "sources": [
+        "gsq-cr000407"
+      ],
+      "action": "recompute"
+    },
+    {
+      "id": "catalogue:Low-carbon lens: ZeroGen 2 and Habanero 1 values",
+      "sources": [
+        "gsq-cr050039"
+      ],
+      "action": "remove"
+    },
+    {
+      "id": "mapping:Low-carbon screening",
+      "sources": [
+        "gsq-cr000407",
+        "gsq-cr050039"
+      ],
+      "action": "reword"
+    },
+    {
+      "id": "tour:legacy-scan",
+      "sources": [
+        "gsq-cr000407"
+      ],
+      "action": "remove"
+    },
+    {
+      "id": "lowcarbon-tour:extraction",
+      "sources": [
+        "gsq-cr050039"
+      ],
+      "action": "remove"
+    },
+    {
+      "id": "lowcarbon-tour:screening",
+      "sources": [
+        "gsq-cr050039"
+      ],
+      "action": "remove"
+    },
+    {
+      "id": "lowcarbon-tour:legacy-integrity",
+      "sources": [
+        "sa-dem-core-2026"
+      ],
+      "action": "remove"
+    },
+    {
+      "id": "lowcarbon-tour:ocr",
+      "sources": [
+        "gsq-cr000407"
+      ],
+      "action": "remove"
+    },
+    {
+      "id": "lowcarbon-tour:review",
+      "sources": [
+        "gsq-cr000407"
+      ],
+      "action": "remove"
+    },
+    {
+      "id": "asset:sample/zerogen-dp1-summary.pdf",
+      "sources": [
+        "gsq-cr050039"
+      ],
+      "action": "remove"
+    }
+  ]
+}

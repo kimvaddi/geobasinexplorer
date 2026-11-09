@@ -1,0 +1,458 @@
+[
+  {
+    "question": "Which source defines the Cooper Basin play intervals, and how many play intervals does it use?",
+    "label": "Retrieved",
+    "citations": 4,
+    "sha256": "55fc89aabfdfe08fae0f684adba325cccc5856f70808e18e01cb0b7c598f43ef"
+  },
+  {
+    "question": "According to the Cooper Basin data guide, how many boreholes lie within the geological extent of the basin, and how much 2D seismic supports the interpretation?",
+    "label": "Retrieved",
+    "citations": 2,
+    "sha256": "44354023fab1139058e11b9ab5ed239c3c7d7ccd71e0fac5fcb4e86414a624cf"
+  },
+  {
+    "question": "Which figure in the Cooper Basin data guide shows where the boreholes and seismic surveys are, and on which page?",
+    "label": "Retrieved",
+    "citations": 3,
+    "sha256": "79ce241ed0fa646826b8e2770f4fc8f93ecf7ba065237716311f02de49219e72"
+  },
+  {
+    "question": "Which Adavale Basin units are recorded as reservoirs in the play table, and which carry a tight-gas flag?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "3f1c2253e5a2eb3477687d3510f7dd4e3ebf7c97c3a1f3c3c03f287eeefb80db"
+  },
+  {
+    "question": "Where is the North Bowen Basin floor deepest, and how deep does it get?",
+    "label": "Precomputed",
+    "citations": 3,
+    "sha256": "5fc7d5df12235f2d5b3009c9b8c7fc8729b9192a92ed28bf501aeed45488c0b7"
+  },
+  {
+    "question": "What is the mean maximum horizontal stress (SHmax) direction inside the Cooper Basin, from quality A–C records, and how many records support it?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "79a51f96d1f4f61718f4ed3a9ed50360b6b8cf74f6c36d4300c7a398aaba003b"
+  },
+  {
+    "question": "Rank the closest analogs in other basins to the Cooper Basin Patchawarra Play (Permian, fluvio-lacustrine sandstone with coal) and justify the top choice with evidence.",
+    "label": "Precomputed",
+    "citations": 3,
+    "sha256": "0ae7fe9ae89503ba826863d9ac710b4bdc838925a58e27903d6ac9c52678a22d"
+  },
+  {
+    "question": "In the 1960 Innamincka 1 report, what shut-in pressure did DST 10 record, and over which perforations?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "31d3c4935e2f10c42e26baceb69cf57db45f1a038ab46f7b067e28d633a787ae"
+  },
+  {
+    "question": "What is the highest bottom-hole temperature recorded in Innamincka 1, and at what depth?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "64e918f458f09964667c85e379e6b3cc1c5f565c1cd416f56af779df7fdc374b"
+  },
+  {
+    "question": "What is the top of the Toolachee Formation in Marabooka 1, below the kelly bushing and below sea level?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "0b30195b1fcd473e022c0712f62b1d8478d132ec26e160c0955c1b597ee8e562"
+  },
+  {
+    "question": "Does the Marabooka 1 report suggest the Toolachee and Patchawarra could be in communication? Cite the evidence and state how sure the report is.",
+    "label": "Retrieved",
+    "citations": 1,
+    "sha256": "e38b73cb1babfa0ffce712796620f7787c3c40f533de726c1784a53f67354683"
+  },
+  {
+    "question": "On seismic line 80-KBK, which shotpoint is closest to Marabooka 1?",
+    "label": "Retrieved",
+    "citations": 2,
+    "sha256": "d5bb4b577f94ed7fde9d5365d8ae205c7734b7c3a70fcb86a53d83e3c7040fec"
+  },
+  {
+    "question": "Which source defines the Cooper Basin play intervals, and how many play intervals does it use?",
+    "label": "Retrieved",
+    "citations": 4,
+    "sha256": "55fc89aabfdfe08fae0f684adba325cccc5856f70808e18e01cb0b7c598f43ef"
+  },
+  {
+    "question": "According to the Cooper Basin data guide, how many boreholes lie within the geological extent of the basin, and how much 2D seismic supports the interpretation?",
+    "label": "Retrieved",
+    "citations": 2,
+    "sha256": "44354023fab1139058e11b9ab5ed239c3c7d7ccd71e0fac5fcb4e86414a624cf"
+  },
+  {
+    "question": "How does the data guide define a play interval, and what bounds one?",
+    "label": "Retrieved",
+    "citations": 4,
+    "sha256": "55334c466f367611133e27aca0076401175135df4968d523e7a31672fd9fb740"
+  },
+  {
+    "question": "Which Adavale Basin units are recorded as reservoirs in the play table, and which carry a tight-gas flag?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "3f1c2253e5a2eb3477687d3510f7dd4e3ebf7c97c3a1f3c3c03f287eeefb80db"
+  },
+  {
+    "question": "Where is the North Bowen Basin floor deepest, and how deep does it get?",
+    "label": "Precomputed",
+    "citations": 3,
+    "sha256": "5fc7d5df12235f2d5b3009c9b8c7fc8729b9192a92ed28bf501aeed45488c0b7"
+  },
+  {
+    "question": "What is the mean maximum horizontal stress (SHmax) direction inside the Cooper Basin, from quality A–C records, and how many records support it?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "79a51f96d1f4f61718f4ed3a9ed50360b6b8cf74f6c36d4300c7a398aaba003b"
+  },
+  {
+    "question": "Rank the closest analogs in other basins to the Cooper Basin Patchawarra Play (Permian, fluvio-lacustrine sandstone with coal) and justify the top choice with evidence.",
+    "label": "Precomputed",
+    "citations": 3,
+    "sha256": "0ae7fe9ae89503ba826863d9ac710b4bdc838925a58e27903d6ac9c52678a22d"
+  },
+  {
+    "question": "In the 1960 Innamincka 1 report, what shut-in pressure did DST 10 record, and over which perforations?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "31d3c4935e2f10c42e26baceb69cf57db45f1a038ab46f7b067e28d633a787ae"
+  },
+  {
+    "question": "What is the highest bottom-hole temperature recorded in Innamincka 1, and at what depth?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "64e918f458f09964667c85e379e6b3cc1c5f565c1cd416f56af779df7fdc374b"
+  },
+  {
+    "question": "What is the top of the Toolachee Formation in Marabooka 1, below the kelly bushing and below sea level?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "0b30195b1fcd473e022c0712f62b1d8478d132ec26e160c0955c1b597ee8e562"
+  },
+  {
+    "question": "Does the Marabooka 1 report suggest the Toolachee and Patchawarra could be in communication? Cite the evidence and state how sure the report is.",
+    "label": "Retrieved",
+    "citations": 1,
+    "sha256": "e38b73cb1babfa0ffce712796620f7787c3c40f533de726c1784a53f67354683"
+  },
+  {
+    "question": "On seismic line 80-KBK, which shotpoint is closest to Marabooka 1?",
+    "label": "Retrieved",
+    "citations": 2,
+    "sha256": "d5bb4b577f94ed7fde9d5365d8ae205c7734b7c3a70fcb86a53d83e3c7040fec"
+  },
+  {
+    "question": "What was the gas rate on DST 6 in Marabooka 1?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "b8026a560bcc0b0642065859a36a41e0c65a8362825436fa149502729430f3e1"
+  },
+  {
+    "question": "What is the two-way time at the top of the Toolachee in Marabooka 1?",
+    "label": "Retrieved",
+    "citations": 4,
+    "sha256": "0135ac2b941befdddaa0dcd1dd8354cb5f5dd242e001d670062082e8ff0dc5f0"
+  },
+  {
+    "question": "What is the porosity of the Hutton Sandstone?",
+    "label": "Not found",
+    "citations": 0,
+    "sha256": "3d92d225bc81f4e36f8ed8e3c2d970a1befbb7732d294444ec7b0fc29ce11f10"
+  },
+  {
+    "question": "Is there CO2 in the Innamincka gas?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "906fefabe9c711d5800a8e831fa4d179bbc36e83c843eefb2a3a8931780f1f8e"
+  },
+  {
+    "question": "Which basin has the most boreholes?",
+    "label": "Precomputed",
+    "citations": 2,
+    "sha256": "b4585fc82c846d7d944eb96aee9d36bd72192b7933cd200679e1cd1ab3bad7d8"
+  },
+  {
+    "question": "On seismic line 80-KBK, where is Marabooka 1?",
+    "label": "Retrieved",
+    "citations": 3,
+    "sha256": "414d78852e6169b12342050ed1574a43738fa4dff26717c2cdd3a210b1689464"
+  },
+  {
+    "question": "Who drilled Innamincka 1?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "66aea30ba9b4dcb549f83130a4473006b2dbbc83b9621c55196c92c0b8647ba1"
+  },
+  {
+    "question": "How deep is Innamincka 1?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "c742e228ed73caeb2b1f90daccd615c40d8b850582b30a6aeee5a537e11fa79a"
+  },
+  {
+    "question": "What is the top of the Patchawarra in Marabooka 1 below sea level?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "53d7a3ac0663379d2b151bc9c01f66729a42ec4da640fab376f5e866a348ae99"
+  },
+  {
+    "question": "What is the top of the Nappamerri in Marabooka 1 below sea level?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "0e43dd05aa47a056f0043c77a7eb2a6f00a35261766b59d96ba0e00a3da313cf"
+  },
+  {
+    "question": "What is the source rock in the Cooper Basin?",
+    "label": "Precomputed",
+    "citations": 2,
+    "sha256": "d0d885dc4b1230e255f591bc61e61b72d3b846e6a629974f2fcbd042dde18061"
+  },
+  {
+    "question": "Where is the Nappamerri Trough?",
+    "label": "Precomputed",
+    "citations": 2,
+    "sha256": "4b31e770921f54029af947dfc7dea1aac2d2b9ed7990ad3a17f6082691b4ebef"
+  },
+  {
+    "question": "What are the reservoirs in the Galilee Basin?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "13393bcf545f6844db0ec54732742d4518caec64d477d3a9239e8bbaa9c6af89"
+  },
+  {
+    "question": "Tell me about the Patchawarra Formation",
+    "label": "Precomputed",
+    "citations": 2,
+    "sha256": "9ecae0315dd719f3cf071980bc828a14391328330484597e2eb3e6aef28416f9"
+  },
+  {
+    "question": "How thick is the Toolachee Formation in Marabooka 1?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "f6e83bd7b50da70201853a74216e1317b3365c6c038984b4466a80fa73f59308"
+  },
+  {
+    "question": "What is the net pay in Marabooka 1?",
+    "label": "Not found",
+    "citations": 0,
+    "sha256": "8733dc6aa61b34dfcc316225c42baa05d8dc26fe7345107242f13d4f2503511b"
+  },
+  {
+    "question": "Compare the Cooper and Galilee basins",
+    "label": "Precomputed",
+    "citations": 2,
+    "sha256": "a46294376b30f84b3a55e89fdf09dfa49cd29c95dd07c023d5117daa76087b8f"
+  },
+  {
+    "question": "How old is the Adavale Basin?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "4766b4934c26ec84ef30f8718499149105c94c8bee6ca7d4cffdf2440132fcfa"
+  },
+  {
+    "question": "Which wells have core photos of the Patchawarra?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "9a2f9521fe3532a111a298853270224cb3ad74671aa1330094a6a1cf5d89203c"
+  },
+  {
+    "question": "What is the temperature gradient in Marabooka 1?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "1e898c3db7a785d4fbe7d0e941ed8d5b29087f4c3f22afe892811255ec027da8"
+  },
+  {
+    "question": "Summarize the Marabooka 1 well",
+    "label": "Precomputed",
+    "citations": 4,
+    "sha256": "49cec70208ccb8467ad343b44728dc0c0073e9e398dc4f829770285d2a2d8d3c"
+  },
+  {
+    "question": "Where is the Cooper Basin?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "f6073712d5e5acca60e672b42488fc8494cc7734395b2241d90140439c2669d6"
+  },
+  {
+    "question": "Explain the petroleum system of the Cooper Basin",
+    "label": "Retrieved",
+    "citations": 4,
+    "sha256": "252c77b8ab0e07705ec778738f67732838d9b7b06ea238c82ed20d6f1d482e9c"
+  },
+  {
+    "question": "What porosity did Core 3 have in Marabooka 1?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "73bbc6fa65321f15e2783441db8800851a327c289d3e101a694f99a920f1be59"
+  },
+  {
+    "question": "What is the Toolachee?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "894fab4e1068c1174bce4933192131c1a2cc11469e3cbec7b5f034c5f0ab41e5"
+  },
+  {
+    "question": "Is the Jochmus a good analog for the Patchawarra?",
+    "label": "Precomputed",
+    "citations": 3,
+    "sha256": "28aae13da274a62eea80c383860f83cc8ca4544c5d9d649741e177fe0d0853ea"
+  },
+  {
+    "question": "Which plays have tight gas?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "71c2694ef49effc68fcb39a86305157cf2a0c0b8fb8502d557b5de2003b46573"
+  },
+  {
+    "question": "What is the TOC of the Roseneath Shale?",
+    "label": "Not found",
+    "citations": 0,
+    "sha256": "082d18433f998c857108ae0ca8b1b617fd6fd2fec4d5725a887514b2c1914a00"
+  },
+  {
+    "question": "What velocity was measured in the Patchawarra in Marabooka 1?",
+    "label": "Retrieved",
+    "citations": 4,
+    "sha256": "339c99a1bf2983fd963f7528f4995cb356c1943a36166a5af5de6cc413efcf15"
+  },
+  {
+    "question": "Which Galilee boreholes are deepest?",
+    "label": "Precomputed",
+    "citations": 3,
+    "sha256": "4d3665d07bf7db12d02a3b13490d2cdb504d617de1394223ee60d93ff0bd370d"
+  },
+  {
+    "question": "Which wells have core photos of the Hutton Sandstone?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "6cb9ccc1e2b2c1b47f6f7640494d1f57592eda8a3c4d5e0ce822374e4cf0ac5b"
+  },
+  {
+    "question": "Where is the Galilee Basin?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "1d4e39686b05c96df14be47c2293ca1d8b6a855d0aede902c421aef93a8d02ff"
+  },
+  {
+    "question": "Which plays have coal seam gas?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "3164a8e63071fa86dac1c7d2c2e0667928534818e60fddb53e691475d75bbb01"
+  },
+  {
+    "question": "What is the permeability of the Lissoy Sandstone?",
+    "label": "Not found",
+    "citations": 0,
+    "sha256": "4f2ba4e39ddb335f819d20b44a1856833f8cfbae992325a334d5cdb5fca9969e"
+  },
+  {
+    "question": "What is the internal architecture of the Cooper Basin?",
+    "label": "Not found",
+    "citations": 0,
+    "sha256": "cf94ba338bf6b7d9920d372b56690e8bde17d312066deb93786c895216a2b2c8"
+  },
+  {
+    "question": "What exploration strategy does the data guide suggest for the Galilee Basin?",
+    "label": "Not found",
+    "citations": 0,
+    "sha256": "8f4ced09f8f97ca0bcc0ddc133a1bfce13a0b02db7cacd2f5818454028916208"
+  },
+  {
+    "question": "What is the share price of Santos?",
+    "label": "Not found",
+    "citations": 0,
+    "sha256": "64166cee4c5af40ac3b5300fb666dc89db4b7273975fb88c97225949a01deeed"
+  },
+  {
+    "question": "Summarise the confidential project proposal",
+    "label": "Not found",
+    "citations": 0,
+    "sha256": "4aa60676a51209c26418c95927c689e9ddd32447f003de3f2c234b76d8dac036"
+  },
+  {
+    "question": "Which figure in the Cooper Basin data guide shows where the boreholes and seismic surveys are, and on which page?",
+    "label": "Retrieved",
+    "citations": 3,
+    "sha256": "79ce241ed0fa646826b8e2770f4fc8f93ecf7ba065237716311f02de49219e72"
+  },
+  {
+    "question": "Which plays are analogs to the Cooper Basin Patchawarra Play?",
+    "label": "Precomputed",
+    "citations": 3,
+    "sha256": "adf2c69fe18bcb6e75000f41a07c7d3a364ca375e74325da9c558a8108217cce"
+  },
+  {
+    "question": "Show me core photos of the Jochmus Formation",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "5a79bac28c911e5c4f350ca057643accbd50585a2165e45adc30f8514c1d456f"
+  },
+  {
+    "question": "Tell me about the Hutton Sandstone",
+    "label": "Precomputed",
+    "citations": 2,
+    "sha256": "dccd43fefeeb7d626b4c282abe3607c94d65c8c4bd102b76beaa7efc39ef7b9a"
+  },
+  {
+    "question": "What is the stratigraphic framework of the Galilee Basin?",
+    "label": "Retrieved",
+    "citations": 4,
+    "sha256": "f23d3957dbc38755025309f418eb13f09602bf3c93fda0609de4152150a62c45"
+  },
+  {
+    "question": "What was the DST 10 shut-in pressure in Innamincka 1?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "d6482932a388b761b118814580024c929eb9fe7bc9bcc24aaf3cef791f396a56"
+  },
+  {
+    "question": "What is the SHmax orientation in the Cooper Basin?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "23d885b00fa340f7be90786ad87c7329f16833246c461bce69e01ad60789df10"
+  },
+  {
+    "question": "Does the Marabooka 1 report suggest the Toolachee and Patchawarra could be in communication?",
+    "label": "Retrieved",
+    "citations": 1,
+    "sha256": "92989db179e0c792cea612bef49addf221315333cdf189079a676a7c433cdf63"
+  },
+  {
+    "question": "Do the Galilee and Bowen basins have same-age counterparts of the Cooper rift plays?",
+    "label": "Precomputed",
+    "citations": 4,
+    "sha256": "b8cdd0c5515526ce55d93aba628b1dc088747cea76246bffa8559443098b3207"
+  },
+  {
+    "question": "Who is the CEO of Santos?",
+    "label": "Not found",
+    "citations": 0,
+    "sha256": "2c43fcd9dcca311c04c51a7ccfbcffb2bf46a4459f3b9833b7cd963439b03358"
+  },
+  {
+    "question": "Which Galilee units are the same age as the Patchawarra Formation?",
+    "label": "Precomputed",
+    "citations": 2,
+    "sha256": "e3b5ec7dae5fa147eb472e22d770d7228a8bf3805cc0e02dedb4a0cac54cec14"
+  },
+  {
+    "question": "Which plays are the same age as the Merrimelia Play?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "b70e0bd37ccd8c750fc0b884a83ac6962a1b7cd6114df7c9ed3ab2ec960a360e"
+  },
+  {
+    "question": "Are there Adavale equivalents of the Toolachee?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "8a226c13f4e85378a38cad1c64f4ca20f6c884c62f1c744888d5fb56afa458c8"
+  },
+  {
+    "question": "What are the time-equivalent plays of the Jochmus Play in the Cooper Basin?",
+    "label": "Precomputed",
+    "citations": 1,
+    "sha256": "881973a0d0c2ae8633a08c3eac59e20a109c080b58048a07d28399ab75e0440a"
+  }
+]

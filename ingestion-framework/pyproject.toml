@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=65"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ontology-ingest"
+version = "0.1.0"
+description = "Deterministic entity and relationship ingestion for Fabric IQ ontologies"
+requires-python = ">=3.10"
+dependencies = ["pyarrow>=14"]
+
+[project.optional-dependencies]
+delta = ["deltalake>=0.17"]
+test = ["pytest>=7"]
+
+[project.scripts]
+ontology-ingest = "ontology_ingest.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["ontology_ingest*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+cache_dir = "tests/.pytest-cache"
+addopts = "-q --basetemp=tests/.pytest-work"
