@@ -252,12 +252,10 @@ Answers support professional judgment. They do not replace it. [Security and res
 
 ## Credits
 
-GeoBasin Explorer AI started as a prototype by **Jorge Peña Alarcón** (Microsoft). The prototype showed that a basin's scattered public record could be gathered in one place, questioned in plain language and answered with evidence.
+GeoBasin Explorer AI began with a vision from **Jorge Peña Alarcón** (Microsoft) to bring a basin's scattered public record into one place, where people could ask questions in plain language and receive answers supported by evidence. Jorge's low-code prototype demonstrated the art of the possible.
 
-**Kim Vaddi** (Microsoft) architected the Azure platform and enhanced the prototype into a complete solution:
+That vision became reality when **Kim Vaddi** (Microsoft) partnered with Jorge to take it from low code to pro code. Kim architected the Azure platform and engineered the solution for governance, security and repeatable deployment, while preserving the intent of the original prototype.
 
-- hosted AI agents in Microsoft Foundry, with an independent validator for every statement;
-- a governed knowledge model in Microsoft Fabric, shared by people and agents through Fabric IQ;
-- multimodal evidence from Azure Document Intelligence and Azure AI Search;
-- identity, network, security and cost controls for running inside an organization's own tenant;
-- Bicep and Terraform for repeatable greenfield and brownfield deployment.
+Today, GeoBasin Explorer AI pairs hosted AI agents in Microsoft Foundry with an independent validator that checks every statement. A governed knowledge model in Microsoft Fabric gives people and agents a shared understanding of the basin through Fabric IQ. Azure Document Intelligence and Azure AI Search supply the multimodal evidence behind each answer. Identity, network, security and cost controls let organizations run it inside their own tenant, while Bicep and Terraform templates make every deployment repeatable, whether greenfield or brownfield.
+
+The result is a fully tested, deployable solution that shows what low-code vision and pro-code engineering can achieve together.
