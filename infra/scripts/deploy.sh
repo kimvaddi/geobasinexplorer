@@ -23,6 +23,8 @@
 #   edge        Azure DNS zone, Front Door Premium, WAF and the public host over Private Link
 #   content     the two search indexes, then the source registry and every public source, landed inside the virtual
 #               network (then a person lands the few browser-only sources and approves each extraction)
+#   library     the library in OneLake (docs/LIBRARY_ONELAKE.md): workspace identity, trusted access, lakehouse shortcuts,
+#               silver and gold notebooks, the OneLake files indexer; once a publication passes, the site reads from gold
 #   smoke       checks the Foundry setup and the public site
 # Settings come from infra/config/environment.env; discovered values go to infra/config/environment.generated.env.
 # GBX_WHATIF=1 previews every template deployment instead of applying it.
@@ -89,7 +91,12 @@ phase_agents() {
   if [ -z "${GBX_WHATIF:-}" ]; then gbx_agents; echo "Version 2 Foundry project: $GBX_V2_PROJECT_ENDPOINT"; fi
 }
 
+# GBX_FABRIC_ENABLED=false deploys without Microsoft Fabric (docs/DEPLOYMENT.md, Deploying without Fabric).
+gbx_fabric_enabled() { [ "${GBX_FABRIC_ENABLED:-true}" != "false" ]; }
+gbx_fabric_skipped() { echo "Skipped: GBX_FABRIC_ENABLED=false, so this deployment has no knowledge ontology, graph or OneLake library."; }
+
 phase_fabric() {
+  if ! gbx_fabric_enabled; then gbx_fabric_skipped; return 0; fi
   gbx_require GBX_FABRIC_CAPACITY_NAME
   if [ "${GBX_FABRIC_CAPACITY_CREATE:-true}" = "true" ]; then
     gbx_require GBX_FABRIC_ADMINS
@@ -107,6 +114,7 @@ phase_fabric() {
 }
 
 phase_knowledge() {
+  if ! gbx_fabric_enabled; then gbx_fabric_skipped; return 0; fi
   gbx_require GBX_FABRIC_WORKSPACE_ID
   gbx_foundation
   local fw="$GBX_ROOT/ingestion-framework" py
@@ -191,7 +199,8 @@ phase_site() {
 }
 
 phase_hosted() {
-  gbx_require GBX_SITE_APP_ID GBX_FABRIC_WORKSPACE_ID GBX_FABRIC_ONTOLOGY_ID
+  gbx_require GBX_SITE_APP_ID
+  if gbx_fabric_enabled; then gbx_require GBX_FABRIC_WORKSPACE_ID GBX_FABRIC_ONTOLOGY_ID; fi
   gbx_agents
   python3 "$GBX_ROOT/services/scientists/deploy_hosted.py"
   gbx_remember GBX_AGENT_IDENTITIES "$(python3 "$GBX_ROOT/services/scientists/deploy_hosted.py" --identities)"
@@ -238,13 +247,37 @@ phase_content() {
   return "$status"
 }
 
+phase_library() {
+  if ! gbx_fabric_enabled; then gbx_fabric_skipped; return 0; fi
+  gbx_require GBX_TENANT_ID GBX_FABRIC_WORKSPACE_ID
+  gbx_foundation
+  local fw="$GBX_ROOT/ingestion-framework" py=python3 status=0
+  if [ -x "$fw/.venv/bin/python" ]; then py="$fw/.venv/bin/python"; fi
+  "$py" "$SCRIPTS/fabric_library.py" setup
+  "$py" "$SCRIPTS/fabric_library.py" deploy
+  "$py" "$SCRIPTS/fabric_library.py" search
+  "$py" "$SCRIPTS/fabric_library.py" run || status=$?
+  if [ "$status" -eq 3 ]; then
+    echo "The library is wired into OneLake. Rerun this phase after approving the first source to publish it from gold."
+    return 0
+  fi
+  if [ "$status" -ne 0 ]; then return "$status"; fi
+  if [ "${GBX_V2_LIBRARY_INDEX:-}" != "gbx-evidence-onelake" ]; then
+    gbx_remember GBX_V2_LIBRARY_INDEX gbx-evidence-onelake
+    GBX_REBUILD_SITE=0 phase_site   # the site now reads live passages from gold whenever gold covers the publication
+  fi
+}
+
 phase_smoke() {
   gbx_agents
-  python3 "$SCRIPTS/foundry_smoke.py"
+  # The public site first, so its result shows even when the Foundry checks stop early.
   if [ -n "${GBX_SITE_URL:-}" ]; then
     curl -sf "$GBX_SITE_URL/api/health" >/dev/null && echo "$GBX_SITE_URL/api/health answers." \
       || echo "$GBX_SITE_URL/api/health does not answer yet (edge cut-over pending?)." >&2
   fi
+  # Its last check reads the agents' Cosmos DB, which a network security perimeter closes to everyone else; it passes
+  # only while GBX_OPERATOR_CIDRS admits your public address (docs/DEPLOYMENT.md, The Bicep path).
+  python3 "$SCRIPTS/foundry_smoke.py"
 }
 
 phase_summary() {
@@ -258,21 +291,23 @@ phase_summary() {
     echo "- Knowledge graph: open the graph model once in the Fabric portal, then run: infra/scripts/deploy.sh knowledge"
   fi
   echo "- Library: once the site answers at ${GBX_SITE_URL:-your site address}, run: infra/scripts/deploy.sh content"
-  echo "  (docs/DEPLOYMENT.md, Content and expert review)."
+  echo "  (docs/DEPLOYMENT.md, Content and expert review), and after approving sources: infra/scripts/deploy.sh library"
 }
 
-if [ "$#" -eq 0 ]; then sed -n '2,28p' "$0" | sed 's/^# \{0,1\}//'; exit 2; fi
+if [ "$#" -eq 0 ]; then sed -n '2,30p' "$0" | sed 's/^# \{0,1\}//'; exit 2; fi
 ALL=0
 if [ "$1" = "all" ]; then
   ALL=1
   set -- foundation images platform
   if [ "${GBX_DEPLOY_GEO:-false}" = "true" ]; then set -- "$@" geo; fi
   if [ "${GBX_DEPLOY_GOVERNANCE:-false}" = "true" ]; then set -- "$@" governance; fi
-  set -- "$@" agents fabric knowledge signin site hosted edge
+  set -- "$@" agents
+  if gbx_fabric_enabled; then set -- "$@" fabric knowledge; fi
+  set -- "$@" signin site hosted edge
 fi
 for p in "$@"; do
   case "$p" in
-    foundation|images|platform|geo|governance|agents|fabric|knowledge|signin|site|hosted|edge|content|smoke) ;;
+    foundation|images|platform|geo|governance|agents|fabric|knowledge|signin|site|hosted|edge|content|library|smoke) ;;
     *) echo "Unknown phase $p. Run infra/scripts/deploy.sh without arguments for the list." >&2; exit 2 ;;
   esac
 done

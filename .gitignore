@@ -17,6 +17,7 @@ __pycache__/
 # Local deployment settings, written by infra/scripts/deploy.sh or copied from the examples
 infra/config/environment.env
 infra/config/environment.generated.env
+infra/config/.secret-error
 ingestion-framework/config/geobasin.json
 ingestion-framework/config/geobasin-foundry.json
 .terraform/

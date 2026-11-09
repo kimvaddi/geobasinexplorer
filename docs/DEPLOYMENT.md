@@ -49,6 +49,11 @@ Images are built in Azure Container Registry, so you do not need Docker.
 | Microsoft Fabric | **Fabric administrator** | Enables the tenant settings in [FABRIC_KNOWLEDGE.md](FABRIC_KNOWLEDGE.md). |
 | Microsoft Fabric | **Capacity administrator** (the deployer) | Assigns the workspace to the capacity. |
 
+The capacity administrator must be a **member** of the tenant that holds the subscription. Fabric rejects business-to-business (B2B) guests as capacity administrators, whether they're named by their guest user principal name, their home address or their object ID ([buy Fabric capacity](https://learn.microsoft.com/fabric/enterprise/buy-capacity#buy-an-azure-capacity-sku-for-fabric)). Fabric does accept a service principal's object ID, but only if the tenant lets service principals use Fabric APIs. If you deploy as a guest, you have two choices:
+
+- Ask a member to create the capacity and a workspace on it, make you an admin of that workspace, and then set `GBX_FABRIC_WORKSPACE_ID`.
+- Deploy without Fabric (see [Deploying without Fabric](#deploying-without-fabric)).
+
 ### Resource providers
 
 A new subscription may not have these providers registered yet:
@@ -152,6 +157,8 @@ infra/scripts/deploy.sh content          # then land the listed sources by hand,
 infra/scripts/deploy.sh smoke
 ```
 
+The smoke test's last check starts an agent conversation and reads it back from the agents' Cosmos DB. That database sits in a network security perimeter that admits only Agent Service and the managed identities of its own subscription, so the check gets HTTP 403 from your machine. To run it, set `GBX_OPERATOR_CIDRS` to your public address, rerun `infra/scripts/deploy.sh agents smoke`, then clear the setting and run `agents` once more. Behind a corporate VPN that is the VPN's egress address.
+
 ## Edge cut-over
 
 Front Door reaches the app only over Private Link. The first rollout takes three steps:
@@ -188,6 +195,33 @@ When the library is published:
 1. Release the live lane's serving agent as the live-lane README describes (`agent-release.mjs --release <version> --create`).
 2. Set `GBX_LIVE_AGENT_NAME` and `GBX_LIVE_AGENT_VERSION`.
 3. Rerun `infra/scripts/deploy.sh platform site knowledge`. The `knowledge` phase then adds the library's sources and documents to the knowledge model.
+
+## The library in OneLake
+
+`infra/scripts/deploy.sh library` brings the library into Microsoft Fabric while the storage account stays closed, and publishes the search index from gold with the OneLake files indexer ([LIBRARY_ONELAKE.md](LIBRARY_ONELAKE.md)). It does the following:
+
+1. Gives the knowledge workspace a workspace identity.
+2. Admits that identity through a resource instance rule on the storage account, and lets it read only `raw`, `processed` and `manifests`.
+3. Creates the lakehouse `geobasin_library_lh` with three shortcuts.
+4. Deploys the silver, gold and extract notebooks and the publish pipeline.
+5. Prepares the OneLake files indexer.
+
+Run it any time after the `fabric` phase. Before the first approval it only wires everything up. After each approval, rerun it: it builds silver and gold, runs the indexer, checks every passage against the push index, and moves the gold pointer. The first time a run passes, it also redeploys the site so that live answers read from gold.
+
+The next `foundation` deployment keeps the resource instance rule, because `main.bicepparam` passes `GBX_FABRIC_WORKSPACE_ID` to the storage module.
+
+## Deploying without Fabric
+
+Set `GBX_FABRIC_ENABLED=false` when the tenant can't give you an F-SKU Fabric capacity, for example when you're a guest there. `all` then skips the `fabric` and `knowledge` phases, and `library` does nothing.
+
+Everything else deploys as usual:
+
+- the platform and live lane;
+- the agents' Foundry account;
+- sign-in and the site with its tool server;
+- the hosted scientists and the edge.
+
+The scientists run without the Fabric IQ toolbox. They answer from the library's passages and say that structured knowledge is unavailable, exactly as they do when the capacity is paused. To add Fabric later, set the flag back to `true` and run `infra/scripts/deploy.sh fabric knowledge hosted library`.
 
 ## Matching the reference deployment
 
@@ -265,3 +299,7 @@ With Terraform, `terraform destroy` removes what Terraform created. Remove the w
 | `content` lists sources that did not land | The publisher refused or was slow, or the source is served only to a browser | Rerun `deploy.sh content` to retry; land browser-only sources with `live_content.py land`. Each attempt's log is in `ContainerAppConsoleLogs_CL` for the `gbx-connect` job. |
 | The site is unreachable after the edge phase | Domains not validated, Private Link not approved, or cut-over not applied | Complete the three [edge cut-over](#edge-cut-over) steps. |
 | The stratigraphy specialist never uses Fabric IQ | Missing consent, unpublished ontology or no read access | Grant tenant-wide consent, publish the ontology and give the user read access in Fabric. |
+| `content` stops with `connect ETIMEDOUT` to the search service | Your machine's network, often a corporate VPN, can't reach that Azure AI Search address | Run the phase from Azure Cloud Shell, or from a machine whose network reaches the search endpoint. The landing itself runs inside the virtual network either way. |
+| Every landed source fails processing with "A current exact clean verdict is required" | The ClamAV scanner had no signatures yet (`missing-or-unsafe-database-main` in the scan log) | The `platform` phase now fetches them once. On an older deployment, start the `gbx-sigs` job once, then rerun `deploy.sh content` to land and scan the sources again. |
+| `site` or `hosted` stops after building the image | The tenant's app management policy caps client secret lifetimes | The `site` phase uses the longest lifetime the tenant accepts and says when to redeploy; set `GBX_SITE_SECRET_DAYS` to choose it. |
+| The `fabric` phase fails with "Invalid principal name" or "All administrators must belong to the same tenant" | The capacity administrator is a B2B guest | Use a member of the tenant (see [Roles](#roles)), or set `GBX_FABRIC_ENABLED=false`. |

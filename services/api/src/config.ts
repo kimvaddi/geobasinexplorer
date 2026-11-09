@@ -162,6 +162,9 @@ export const cfg = {
     copilot: (process.env.GBX_V2_COPILOT ?? "off") === "on",
     copilotAgent: process.env.GBX_V2_COPILOT_AGENT ?? "gbx-copilot",
     reserveTokens: num("GBX_V2_RESERVE_TOKENS", 300_000),
+    // The library in OneLake (docs/LIBRARY_ONELAKE.md): live passages come from the index the OneLake files indexer fills
+    // from gold, gbx-evidence-onelake, once it covers the current publication; empty keeps every read on the push index.
+    libraryIndex: /^[a-z0-9][a-z0-9-]{1,127}$/.test(process.env.GBX_V2_LIBRARY_INDEX ?? "") ? process.env.GBX_V2_LIBRARY_INDEX! : "",
     // The Fabric knowledge graph behind the knowledge tools (v2/knowledge.ts), read with its own managed identity; any
     // empty value leaves the tools telling the scientists that the graph isn't connected.
     fabric: { workspaceId: process.env.GBX_V2_FABRIC_WORKSPACE ?? "", graphModelId: process.env.GBX_V2_FABRIC_GRAPH ?? "", clientId: process.env.GBX_V2_FABRIC_CLIENT_ID ?? "" },

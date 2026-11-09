@@ -59,8 +59,13 @@ def capacity_id(name: str) -> str:
 def ensure() -> str:
     name = os.environ.get("GBX_FABRIC_WORKSPACE_NAME", "GeoBasin Knowledge")
     wanted = os.environ.get("GBX_FABRIC_WORKSPACE_ID", "")
+    workspaces = listing(f"{FABRIC}/workspaces")
+    found = next((w for w in workspaces if (wanted and w["id"] == wanted) or (not wanted and w.get("displayName") == name)), None)
+    # A workspace someone else already placed on a capacity needs nothing more. This is also how a deployer who can't
+    # administer the capacity proceeds, such as a B2B guest, whom Fabric never admits as a capacity administrator.
+    if wanted and found and found.get("capacityId"):
+        return found["id"]
     capacity = capacity_id(os.environ["GBX_FABRIC_CAPACITY_NAME"])
-    found = next((w for w in listing(f"{FABRIC}/workspaces") if (wanted and w["id"] == wanted) or (not wanted and w.get("displayName") == name)), None)
     if not found:
         if wanted:
             sys.exit(f"No workspace {wanted} is visible to this sign-in.")

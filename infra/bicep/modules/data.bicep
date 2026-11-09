@@ -7,6 +7,12 @@ param sfx string
 @description('Monthly cap on scanned gigabytes for malware scanning (cost guard).')
 param malwareScanCapGb int = 5
 
+@description('Fabric workspaces admitted by trusted workspace access, so their OneLake shortcuts can read the library while public network access stays disabled (docs/LIBRARY_ONELAKE.md).')
+param fabricWorkspaceIds array = []
+
+@description('Microsoft Defender for Storage writes a resource instance rule of its own for malware scanning; keep it so a redeployment does not drop it.')
+param keepDefenderScannerRule bool = true
+
 resource st 'Microsoft.Storage/storageAccounts@2025-06-01' = {
   name: 'stgbx${sfx}'
   location: location
@@ -22,7 +28,15 @@ resource st 'Microsoft.Storage/storageAccounts@2025-06-01' = {
     supportsHttpsTrafficOnly: true
     // MCAPS governance forces private-only access; access is through the private endpoints in vnet-gbx.
     publicNetworkAccess: 'Disabled'
-    networkAcls: { defaultAction: 'Deny', bypass: 'AzureServices' }
+    // Resource instance rules admit only named resources; Microsoft Learn requires the zero subscription id for a Fabric
+    // workspace (Trusted workspace access, Resource instance rule via ARM template).
+    networkAcls: {
+      defaultAction: 'Deny'
+      bypass: 'AzureServices'
+      resourceAccessRules: concat(
+        keepDefenderScannerRule ? [ { tenantId: tenant().tenantId, resourceId: subscriptionResourceId('Microsoft.Security/datascanners', 'StorageDataScanner') } ] : [],
+        map(fabricWorkspaceIds, id => { tenantId: tenant().tenantId, resourceId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/Fabric/providers/Microsoft.Fabric/workspaces/${id}' }))
+    }
     allowCrossTenantReplication: false
   }
 }

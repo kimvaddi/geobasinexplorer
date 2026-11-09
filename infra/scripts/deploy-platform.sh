@@ -36,6 +36,19 @@ case "${1:-}" in
     az deployment group "${verb[@]}" --subscription "$SUB" -g "$APP_RG" -n gbx-pipeline -f pipeline.bicep -o none \
       -p sfx="$GBX_SUFFIX" imageTag="$TAG"
     gbx_remember GBX_RELEASE_TAG "$TAG"
+    # The ClamAV scanner refuses every file until it has signatures, and gbx-sigs otherwise first runs at its next
+    # six-hourly schedule, so a new deployment fetches them now; a later deployment only refreshes them.
+    if [ -z "${GBX_WHATIF:-}" ]; then
+      sigs="$(az containerapp job start --subscription "$SUB" -g "$APP_RG" -n gbx-sigs --query name -o tsv)"
+      for _ in $(seq 1 60); do
+        state="$(az containerapp job execution show --subscription "$SUB" -g "$APP_RG" -n gbx-sigs --job-execution-name "$sigs" \
+          --query properties.status -o tsv 2>/dev/null || true)"
+        case "$state" in Succeeded) echo "ClamAV signatures are in place ($sigs)."; break ;;
+          Failed|Stopped|Degraded) echo "gbx-sigs execution $sigs ended $state; the scanner refuses files until it succeeds." >&2; false ;; esac
+        sleep 15
+      done
+      if [ "$state" != "Succeeded" ]; then echo "gbx-sigs execution $sigs hasn't finished; check it before landing content." >&2; fi
+    fi
     echo "Platform workloads deployed with release $TAG."
     ;;
   *)

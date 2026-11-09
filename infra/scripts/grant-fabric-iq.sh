@@ -48,21 +48,36 @@ consent() {  # <resource app ID> <space-separated scopes>
   url="$GRAPH/oauth2PermissionGrants?\$filter=clientId%20eq%20'$APP_SP'%20and%20resourceId%20eq%20'$resource_sp'"
   id="$(az rest --method get --url "$url" --query "value[?consentType=='AllPrincipals'] | [0].id" -o tsv)"
   if [ -z "$id" ]; then
-    az rest --method post --url "$GRAPH/oauth2PermissionGrants" -o none \
-      --body "{\"clientId\":\"$APP_SP\",\"consentType\":\"AllPrincipals\",\"resourceId\":\"$resource_sp\",\"scope\":\"$2\"}"
-    echo "Granted tenant-wide consent for $1: $2."
+    if az rest --method post --url "$GRAPH/oauth2PermissionGrants" -o none \
+      --body "{\"clientId\":\"$APP_SP\",\"consentType\":\"AllPrincipals\",\"resourceId\":\"$resource_sp\",\"scope\":\"$2\"}" 2>/dev/null; then
+      echo "Granted tenant-wide consent for $1: $2."
+    else
+      CONSENT_PENDING=1
+    fi
     return
   fi
   have=" $(az rest --method get --url "$url" --query "value[?consentType=='AllPrincipals'] | [0].scope" -o tsv) "
   for s in $2; do case "$have" in *" $s "*) ;; *) missing="$missing $s" ;; esac; done
   if [ -n "$missing" ]; then
-    az rest --method patch --url "$GRAPH/oauth2PermissionGrants/$id" -o none --body "{\"scope\":\"$(echo "$have$missing" | xargs)\"}"
-    echo "Extended tenant-wide consent for $1 with$missing."
+    if az rest --method patch --url "$GRAPH/oauth2PermissionGrants/$id" -o none --body "{\"scope\":\"$(echo "$have$missing" | xargs)\"}" 2>/dev/null; then
+      echo "Extended tenant-wide consent for $1 with$missing."
+    else
+      CONSENT_PENDING=1
+    fi
   fi
 }
+# Tenant-wide consent needs a Global Administrator or Privileged Role Administrator (docs/DEPLOYMENT.md, Roles). Without it
+# the rest still applies: people are asked to consent when they sign in, if the tenant lets users consent, and a run that
+# can't be exchanged for the person starts as the app, whose scientists use the typed tools.
+CONSENT_PENDING=0
 consent "$FOUNDRY_APP" "user_impersonation"
 consent "$APP_ID" "user_impersonation"
 consent "$GRAPH_APP" "openid profile email offline_access"
+if [ "$CONSENT_PENDING" = 1 ]; then
+  echo "Tenant-wide consent needs an administrator. Ask a Global Administrator or Privileged Role Administrator to run:"
+  echo "  az ad app permission admin-consent --id $APP_ID"
+  echo "Until then each person consents at sign-in, if the tenant allows it, and runs start as the app instead of the person."
+fi
 
 # 2. The agents identity as the registration's credential.
 if [ -z "$(az ad app federated-credential list --id "$APP_ID" --query "[?name=='$FIC_NAME'].name | [0]" -o tsv)" ]; then

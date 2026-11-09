@@ -107,6 +107,9 @@ jobs:
       - name: Prepared-answer checks reused while nothing they judged has changed (verdict cache)
         run: node build.mjs --script src/verdict-cache.test.ts && node --test dist/scripts/verdict-cache.test.mjs
         working-directory: services/api
+      - name: Live evidence (the OneLake-fed library index and its fallback)
+        run: node build.mjs --script src/live/serving-evidence.test.ts && node --test dist/scripts/serving-evidence.test.mjs
+        working-directory: services/api
 
   spatial:
     name: GDAL/PROJ spatial service (image builds only if the reference fixture still holds)

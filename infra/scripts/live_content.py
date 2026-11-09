@@ -129,8 +129,13 @@ class Job:
         return out.get("name") or out["id"].rsplit("/", 1)[-1]
 
     def status(self, execution: str) -> str:
-        return json.loads(az("containerapp", "job", "execution", "show", "-n", JOB, "-g", APP_RG,
-                             "--job-execution-name", execution, "--query", "properties.status"))
+        # A just-started execution can be invisible for a few seconds, and bursts of calls are throttled, so a failed
+        # read means "not finished yet"; the caller's time limit still ends an execution that never reports.
+        try:
+            return json.loads(az("containerapp", "job", "execution", "show", "-n", JOB, "-g", APP_RG,
+                                 "--job-execution-name", execution, "--query", "properties.status"))
+        except subprocess.CalledProcessError:
+            return "Unknown"
 
     def wait(self, execution: str, limit_s: int = 900) -> str:
         start = time.time()

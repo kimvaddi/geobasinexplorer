@@ -53,8 +53,14 @@ FABRIC_IQ_TOOL = {"type": "fabric_iq_preview", "project_connection_id": "fabrici
                   .format(workspace=os.environ.get("GBX_FABRIC_WORKSPACE_ID", ""), ontology=os.environ.get("GBX_FABRIC_ONTOLOGY_ID", ""))}
 
 
+# GBX_FABRIC_ENABLED=false deploys the scientists without the knowledge ontology: no toolbox, so they answer from the
+# library's passages and say that structured knowledge is unavailable (docs/DEPLOYMENT.md, Deploying without Fabric).
+FABRIC_ENABLED = os.environ.get("GBX_FABRIC_ENABLED", "true").strip().lower() != "false"
+
+
 def check_settings() -> None:
-    for name in ("GBX_V2_PROJECT_ENDPOINT", "GBX_SITE_URL", "GBX_SITE_APP_ID", "GBX_FABRIC_WORKSPACE_ID", "GBX_FABRIC_ONTOLOGY_ID"):
+    names = ("GBX_V2_PROJECT_ENDPOINT", "GBX_SITE_URL", "GBX_SITE_APP_ID")
+    for name in names + (("GBX_FABRIC_WORKSPACE_ID", "GBX_FABRIC_ONTOLOGY_ID") if FABRIC_ENABLED else ()):
         _required(name)
 
 
@@ -194,8 +200,8 @@ def main() -> None:
         return
     if not a.show:
         check_settings()
-        code, toolbox_url = package(), ensure_toolbox(token())
-        print(f"{TOOLBOX}: {toolbox_url}")
+        code, toolbox_url = package(), ensure_toolbox(token()) if FABRIC_ENABLED else ""
+        print(f"{TOOLBOX}: {toolbox_url or 'not created, because GBX_FABRIC_ENABLED=false'}")
         for name, mode in AGENTS.items():
             deploy(name, mode, code, toolbox_url)
     else:

@@ -36,6 +36,12 @@ param answerCapacity int = 100
 param validatorCapacity int = 100
 param embedCapacity int = 300
 
+@description('Fabric workspaces that may read the library through OneLake shortcuts (docs/LIBRARY_ONELAKE.md).')
+param fabricWorkspaceIds array = []
+
+@description('Keep the resource instance rule that Microsoft Defender for Storage adds for malware scanning.')
+param keepDefenderScannerRule bool = true
+
 var tags = {
   workload: 'geobasin-explorer-ai'
   environment: 'prototype'
@@ -87,7 +93,7 @@ module ops 'modules/ops.bicep' = {
 module data 'modules/data.bicep' = {
   scope: rgData
   name: 'gbx-data'
-  params: { location: location, tags: union(tags, { layer: 'data' }), sfx: sfx }
+  params: { location: location, tags: union(tags, { layer: 'data' }), sfx: sfx, fabricWorkspaceIds: fabricWorkspaceIds, keepDefenderScannerRule: keepDefenderScannerRule }
 }
 
 module ai 'modules/ai.bicep' = {

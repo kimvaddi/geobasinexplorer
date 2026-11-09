@@ -186,6 +186,7 @@ az login
 infra/scripts/deploy.sh all         # foundation to edge, then lists the steps that need a person
 infra/scripts/deploy.sh knowledge   # after opening the new graph model once in the Fabric portal
 infra/scripts/deploy.sh content     # after the edge cut-over: indexes, then every public source for expert review
+infra/scripts/deploy.sh library     # the library in OneLake; rerun after each approval to publish from gold
 infra/scripts/deploy.sh smoke       # checks the deployment
 ```
 
@@ -226,6 +227,7 @@ The [deployment guide](docs/DEPLOYMENT.md) covers prerequisites, quotas, each ph
 | [Deployment](docs/DEPLOYMENT.md) | Greenfield and brownfield deployment with Bicep or Terraform |
 | [Scientist agents](docs/FOUNDRY_AGENTS.md) | The agent workflow, tools, identity and the model router |
 | [Fabric knowledge build](docs/FABRIC_KNOWLEDGE.md) | The lakehouse, ontology and graph model |
+| [Library in OneLake](docs/LIBRARY_ONELAKE.md) | Shortcuts to the closed storage account, silver and gold Delta tables, and publishing from gold |
 | [Security and responsible AI](docs/SECURITY.md) | Controls, decisions for each deployment and preview features |
 | [Data sources](docs/DATA_SOURCES.md) | Every public source and its license |
 | [Ingestion framework](ingestion-framework/README.md) | Building an ontology and graph from your own datasets |

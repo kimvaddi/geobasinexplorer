@@ -51,6 +51,7 @@ param allowedClientIds = concat([ '04b07795-8ddb-461a-bbee-02f9e1bf7b46' ], filt
 param scientistsProjectEndpoint = readEnvironmentVariable('GBX_V2_PROJECT_ENDPOINT', '')
 param fabricWorkspaceId = readEnvironmentVariable('GBX_FABRIC_WORKSPACE_ID', '')
 param fabricGraphModelId = readEnvironmentVariable('GBX_FABRIC_GRAPH_MODEL_ID', '')
+param libraryIndex = readEnvironmentVariable('GBX_V2_LIBRARY_INDEX', '')
 
 param esriApiKey = readEnvironmentVariable('GBX_ESRI_API_KEY', '')
 param planetaryIdentityId = readEnvironmentVariable('GBX_PC_IDENTITY_ID', '')

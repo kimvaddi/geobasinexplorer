@@ -110,6 +110,8 @@ resource search 'Microsoft.Search/searchServices@2025-05-01' = {
   location: location
   tags: tags
   sku: { name: searchSku }
+  // The OneLake files indexer reads the library's gold files with this identity (docs/LIBRARY_ONELAKE.md).
+  identity: { type: 'SystemAssigned' }
   properties: {
     replicaCount: 1
     partitionCount: 1

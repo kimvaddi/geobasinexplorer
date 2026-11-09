@@ -38,8 +38,27 @@ case "${1:-}" in
     export GBX_ESRI_API_KEY GBX_SITE_RUN_TICKET_KEY
     OLD_KEYS="$(az ad app credential list --id "$GBX_SITE_APP_ID" --query "[].keyId" -o tsv)"
     NAME="easyauth-site-$(date -u +%Y%m%d%H%M)"
-    END="$(date -u -v+180d +%Y-%m-%d 2>/dev/null || date -u -d '+180 days' +%Y-%m-%d)"
-    GBX_SITE_AUTH_CLIENT_SECRET="$(az ad app credential reset --id "$GBX_SITE_APP_ID" --append --display-name "$NAME" --end-date "$END" --query password -o tsv 2>/dev/null)"
+    # The sign-in layer's client secret. Many tenants cap a secret's lifetime with an app management policy, so the
+    # longest lifetime the tenant accepts is used, starting from GBX_SITE_SECRET_DAYS (180 by default). Azure CLI's
+    # warning goes to stderr and the secret to stdout, so only the error text is kept, never the secret.
+    GBX_SITE_AUTH_CLIENT_SECRET=""
+    for days in "${GBX_SITE_SECRET_DAYS:-180}" 90 60 30 14 7; do
+      END="$(date -u -v+"${days}"d +%Y-%m-%d 2>/dev/null || date -u -d "+${days} days" +%Y-%m-%d)"
+      if GBX_SITE_AUTH_CLIENT_SECRET="$(az ad app credential reset --id "$GBX_SITE_APP_ID" --append --display-name "$NAME" \
+        --end-date "$END" --query password -o tsv 2>"$GBX_INFRA/config/.secret-error")"; then
+        break
+      fi
+      if ! grep -q "Credential lifetime exceeds" "$GBX_INFRA/config/.secret-error"; then break; fi
+    done
+    if [ -z "$GBX_SITE_AUTH_CLIENT_SECRET" ]; then
+      echo "The sign-in registration $GBX_SITE_APP_ID refused a new client secret:" >&2
+      grep -v WARNING "$GBX_INFRA/config/.secret-error" >&2 || true
+      rm -f "$GBX_INFRA/config/.secret-error"; false
+    fi
+    rm -f "$GBX_INFRA/config/.secret-error"
+    if [ "$days" != "${GBX_SITE_SECRET_DAYS:-180}" ]; then
+      echo "The tenant's app management policy allows a sign-in secret of at most $days days here; redeploy the site before $END."
+    fi
     export GBX_SITE_AUTH_CLIENT_SECRET
     cd "$GBX_INFRA/bicep"
     if [ -n "${GBX_WHATIF:-}" ]; then

@@ -82,6 +82,9 @@ param copilotAgent string = 'gbx-copilot'
 param fabricWorkspaceId string = ''
 param fabricGraphModelId string = ''
 
+@description('The library in OneLake (docs/LIBRARY_ONELAKE.md): the index the OneLake files indexer fills from gold, read once it covers the current publication. Empty keeps every live read on the push index; deploy.sh library sets it.')
+param libraryIndex string = ''
+
 @secure()
 @description('ArcGIS Location Platform API key for the Esri base maps. infra/scripts/esri-key.sh stores it as the app\'s secret esri-api-key, and deploy-site.sh carries it into each deployment without printing it. Empty leaves the Esri base maps off.')
 param esriApiKey string = ''
@@ -194,6 +197,7 @@ resource site 'Microsoft.App/containerApps@2025-07-01' = {
             { name: 'GBX_V2_FABRIC_WORKSPACE', value: fabricWorkspaceId }
             { name: 'GBX_V2_FABRIC_GRAPH', value: fabricGraphModelId }
             { name: 'GBX_V2_FABRIC_CLIENT_ID', value: fabricIdentity.properties.clientId }
+            { name: 'GBX_V2_LIBRARY_INDEX', value: libraryIndex }
             // The sign-in registration, which trusts the agents identity, exchanges a person's token for one
             // on their behalf (services/api/src/v2/obo.ts).
             { name: 'GBX_OBO_CLIENT_ID', value: authClientId }
