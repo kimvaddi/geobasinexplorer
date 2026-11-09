@@ -32,7 +32,8 @@ case "${1:-}" in
     az deployment group "${verb[@]}" --subscription "$SUB" -g "$APP_RG" -n gbx-live -f live.bicep -o none \
       -p sfx="$GBX_SUFFIX" pipelineImageTag="$TAG" appInsightsConnectionString="$GBX_APPI_CONNECTION_STRING" \
          liveScan="${GBX_LIVE_SCAN:-true}" purview="${GBX_PURVIEW:-false}" purviewCollectionId="${GBX_PURVIEW_COLLECTION_ID:-}" \
-         tokensPerDay="${GBX_TOKENS_PER_DAY:-50000000}" aiEnabled="${GBX_AI_ENABLED:-true}"
+         tokensPerDay="${GBX_TOKENS_PER_DAY:-50000000}" aiEnabled="${GBX_AI_ENABLED:-true}" \
+         ocrPagesPerDay="${GBX_OCR_PAGES_PER_DAY:-500}"
     az deployment group "${verb[@]}" --subscription "$SUB" -g "$APP_RG" -n gbx-pipeline -f pipeline.bicep -o none \
       -p sfx="$GBX_SUFFIX" imageTag="$TAG"
     gbx_remember GBX_RELEASE_TAG "$TAG"

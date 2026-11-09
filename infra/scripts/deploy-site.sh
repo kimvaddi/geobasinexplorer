@@ -79,6 +79,18 @@ case "${1:-}" in
     gbx_remember GBX_SITE_FABRIC_PRINCIPAL_ID "$(value fabricPrincipalId)"
     echo "gbx-site runs $TAG at $GBX_SITE_FQDN (public address $GBX_SITE_URL once the edge is deployed)."
     if [ -n "${GBX_AGENT_IDENTITIES:-}" ] && [ -n "${GBX_V2_PROJECT_ENDPOINT:-}" ]; then
+      # The sign-in registration requires an app role, so each scientist's own identity needs GeoBasin.Tools before Entra
+      # issues it a token for the tool server; without it every specialist fails before its first tool call.
+      sp="$(az ad sp show --id "$GBX_SITE_APP_ID" --query id -o tsv)"
+      tools="$(az ad app show --id "$GBX_SITE_APP_ID" --query "appRoles[?value=='GeoBasin.Tools'].id | [0]" -o tsv)"
+      for principal in ${GBX_AGENT_IDENTITIES//,/ }; do
+        if [ -z "$(az rest --method get --url "https://graph.microsoft.com/v1.0/servicePrincipals/$sp/appRoleAssignedTo" \
+          --query "value[?principalId=='$principal' && appRoleId=='$tools'].id | [0]" -o tsv)" ]; then
+          az rest --method post --url "https://graph.microsoft.com/v1.0/servicePrincipals/$sp/appRoleAssignedTo" -o none \
+            --body "{\"principalId\":\"$principal\",\"resourceId\":\"$sp\",\"appRoleId\":\"$tools\"}"
+          echo "The scientist identity $principal now holds GeoBasin.Tools."
+        fi
+      done
       "$GBX_INFRA/scripts/grant-agent-caller.sh" "$GBX_SITE_AGENTS_PRINCIPAL_ID" gbx-coscientist gbx-copilot
       "$GBX_INFRA/scripts/grant-fabric-iq.sh" "$GBX_SITE_APP_ID" "$GBX_SITE_AGENTS_PRINCIPAL_ID"
     fi
