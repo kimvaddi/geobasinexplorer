@@ -65,7 +65,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' existing = {
 resource resumer 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
   name: guid(subscription().id, 'geobasin-fabric-capacity-resumer')
   properties: {
-    roleName: 'GeoBasin Fabric Capacity Resumer'
+    roleName: 'GeoBasin Fabric Capacity Resumer (${capacityName})'
     description: 'Reads a Microsoft Fabric capacity and resumes it, and nothing else: it cannot pause, resize or delete it. Used by the GeoBasin version 2 morning job.'
     type: 'CustomRole'
     permissions: [

@@ -30,7 +30,8 @@ python3 - "$PRINCIPAL" "$TENANT" ingestion-framework/config/geobasin.json <<'PY'
 import base64, json, subprocess, sys, time, urllib.error, urllib.request
 principal, tenant, config = sys.argv[1:4]
 conf = json.load(open(config))
-workspace, lakehouse, graph_name = conf["workspace_id"], conf["lakehouse_id"], conf["graph_model_name"]
+workspace, graph_name = conf["workspace_id"], conf["graph_model_name"]
+lakehouse = conf.get("lakehouse_id", "")
 F = "https://api.fabric.microsoft.com"
 SETTING, ROLE = "ServicePrincipalAccessPermissionAPIs", "GeoBasinGraphReaders"
 token = subprocess.check_output(["az", "account", "get-access-token", "--resource", F, "--query", "accessToken", "-o", "tsv"], text=True).strip()
@@ -54,6 +55,12 @@ def member_of(groups):
                                    f"https://graph.microsoft.com/v1.0/directoryObjects/{principal}/checkMemberGroups",
                                    "--body", json.dumps({"groupIds": groups}), "--query", "value", "-o", "json"], text=True)
     return bool(json.loads(out))
+# The configuration names the lakehouse by ID or, as a new deployment writes it, by name.
+if not lakehouse:
+    s, _, items = call("GET", f"/v1/workspaces/{workspace}/lakehouses")
+    if s != 200: sys.exit(f"The workspace's lakehouses could not be listed ({s}): {items}")
+    lakehouse = next((i["id"] for i in items.get("value", []) if i.get("displayName") == conf.get("lakehouse_name")), "")
+    if not lakehouse: sys.exit(f"No lakehouse named {conf.get('lakehouse_name')} in the workspace; run the knowledge phase first.")
 
 # 1. The tenant setting admits the identity.
 s, _, settings = call("GET", "/v1/admin/tenantsettings")

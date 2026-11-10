@@ -99,7 +99,7 @@ Three identities take part in every run. None of them uses a key.
 - The hosting code attaches it only as the `x-gbx-run-ticket` header on that run's own MCP connection. The model never sees it.
 - The tool server accepts a call only with both the hosted agent's Entra token and a valid ticket. It then applies the user's limits and access filters and records the call in the run's register.
 
-**Per-user sessions.** Foundry keeps each caller's sessions private. Because the app calls on everyone's behalf, it tells Foundry whom each run is for: it sends the signed-in user's Entra object ID, taken from the sign-in layer and never from the browser, in the `x-ms-user-identity` header. That header needs a data action that no built-in role includes. [grant-agent-caller.sh](../infra/scripts/grant-agent-caller.sh) creates a custom role, GeoBasin Agent User Delegation, with only that action, and assigns it with Foundry Agent Consumer, scoped to the two agents.
+**Per-user sessions.** Foundry keeps each caller's sessions private. Because the app calls on everyone's behalf, it tells Foundry whom each run is for: it sends the signed-in user's Entra object ID, taken from the sign-in layer and never from the browser, in the `x-ms-user-identity` header. That header needs a data action that no built-in role includes. [grant-agent-caller.sh](../infra/scripts/grant-agent-caller.sh) creates a custom role, GeoBasin Agent User Delegation, named after the deployment's Foundry account because custom role names are unique across a directory. The role holds only that action, and the script assigns it with Foundry Agent Consumer, scoped to the two agents.
 
 ## How the app calls the agents
 

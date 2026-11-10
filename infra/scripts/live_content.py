@@ -20,7 +20,8 @@ site-signin.sh pre-authorizes; the operator holds the GeoBasin owner role. Token
 request headers, never on a command line.
 
 Settings come from the environment that infra/scripts/deploy.sh exports: GBX_SUBSCRIPTION_ID, GBX_LIVE_SOURCES and, for
-land and manifest, GBX_SITE_URL and GBX_SITE_APP_ID. GBX_CONTENT_PARALLEL sets how many sources land at once (default 4).
+land and manifest, GBX_SITE_URL and GBX_SITE_APP_ID. Run by hand, the script reads them from infra/config through lib.sh.
+GBX_CONTENT_PARALLEL sets how many sources land at once (default 4).
 """
 from __future__ import annotations
 
@@ -221,7 +222,22 @@ def manifest(out: pathlib.Path) -> int:
     return 0
 
 
+def load_settings() -> None:
+    """Run by hand, the script has none of the settings deploy.sh exports, so it reads them through lib.sh the same way."""
+    if os.environ.get("GBX_SUBSCRIPTION_ID"):
+        return
+    out = subprocess.run(["bash", "-c", '. "$1" >/dev/null && env -0', "bash", str(ROOT / "infra" / "scripts" / "lib.sh")],
+                         capture_output=True, check=False)
+    if out.returncode != 0:
+        sys.exit(out.stderr.decode("utf-8", "replace").strip() or "The settings in infra/config/environment.env could not be loaded.")
+    for entry in out.stdout.split(b"\0"):
+        name, _, value = entry.decode("utf-8", "replace").partition("=")
+        if name.startswith("GBX_") and name not in os.environ:
+            os.environ[name] = value
+
+
 def main() -> int:
+    load_settings()
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     sub = ap.add_subparsers(dest="command", required=True)
     sub.add_parser("plan")

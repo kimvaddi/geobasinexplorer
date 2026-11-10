@@ -32,3 +32,6 @@ ingestion-framework/config/geobasin-foundry.json
 .pytest_cache/
 .pytest-cache/
 .run-ts-*/
+
+# Data bundle and other local build output (infra/scripts/deploy.sh knowledge)
+/build/

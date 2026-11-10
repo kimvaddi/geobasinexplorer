@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # Lets one identity call version 2's hosted scientists on behalf of the signed-in person (docs/FOUNDRY_AGENTS.md, "How
 # the app calls the squad"). At the scope of each named agent alone, it assigns Foundry Agent Consumer, the least-privilege
-# built-in role for an agent endpoint, and the custom role "GeoBasin Agent User Delegation", which holds only the data
-# action that lets a trusted middle tier send x-ms-user-identity, because no built-in role includes it. Safe to rerun.
+# built-in role for an agent endpoint, and the custom role "GeoBasin Agent User Delegation (<Foundry account>)", which
+# holds only the data action that lets a trusted middle tier send x-ms-user-identity, because no built-in role includes it.
+# Custom role names are unique across the directory, so the account's name keeps two deployments in one tenant apart.
+# Safe to rerun.
 #   infra/scripts/grant-agent-caller.sh <principal-object-id> <agent> [<agent> ...]
 # Learn: https://learn.microsoft.com/azure/foundry/concepts/rbac-foundry#agent-scope-role-assignments
 #        https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agent-permissions#delegate-the-end-user-identity
@@ -16,7 +18,7 @@ SUB="$AGENTS_SUB"
 ACCOUNT_ID="$GBX_V2_ACCOUNT_ID"
 PROJECT_ID="$GBX_V2_PROJECT_ID"
 CONSUMER=eed3b665-ab3a-47b6-8f48-c9382fb1dad6
-DELEGATION="GeoBasin Agent User Delegation"
+DELEGATION="GeoBasin Agent User Delegation (${ACCOUNT_ID##*/})"
 
 delegation_id() { az role definition list --subscription "$SUB" --custom-role-only true --name "$DELEGATION" --scope "$ACCOUNT_ID" --query "[0].name" -o tsv; }
 DELEGATION_ID="$(delegation_id)"

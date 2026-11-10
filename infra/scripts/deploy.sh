@@ -34,15 +34,34 @@ SCRIPTS="$GBX_INFRA/scripts"
 BICEP="$GBX_INFRA/bicep"
 VERB=(create); if [ -n "${GBX_WHATIF:-}" ]; then VERB=(what-if); fi
 
+register_network_feature() {
+  # The Container Apps environment fails in a new subscription unless this Microsoft.Network feature is registered.
+  local feature=AllowBringYourOwnPublicIpAddress state i
+  state="$(az feature show --subscription "$SUB" --namespace Microsoft.Network --name "$feature" --query properties.state -o tsv 2>/dev/null || true)"
+  if [ "$state" = "Registered" ]; then return; fi
+  echo "Registering the Microsoft.Network feature $feature (a few minutes on a new subscription)."
+  az feature register --subscription "$SUB" --namespace Microsoft.Network --name "$feature" -o none
+  for i in $(seq 1 60); do
+    state="$(az feature show --subscription "$SUB" --namespace Microsoft.Network --name "$feature" --query properties.state -o tsv)"
+    if [ "$state" = "Registered" ]; then break; fi
+    sleep 20
+  done
+  if [ "$state" != "Registered" ]; then echo "The feature $feature is still $state; rerun the foundation phase later." >&2; return 1; fi
+  az provider register --subscription "$SUB" --namespace Microsoft.Network --wait -o none
+}
+
 phase_foundation() {
   gbx_require GBX_OPERATOR_OBJECT_ID GBX_ALERT_EMAIL GBX_SITE_URL
+  if [ -z "${GBX_WHATIF:-}" ]; then register_network_feature; fi
   az deployment sub "${VERB[@]}" --subscription "$SUB" -l "$GBX_LOCATION" -n gbx-foundation \
     -f "$BICEP/main.bicep" -p "$BICEP/main.bicepparam" -o none
   if [ -z "${GBX_WHATIF:-}" ]; then gbx_foundation; echo "Foundation ready (suffix $GBX_SUFFIX)."; fi
 }
 
 phase_images() {
-  gbx_remember GBX_RELEASE_TAG "$("$SCRIPTS/deploy-platform.sh" build)"
+  local tag
+  tag="$("$SCRIPTS/deploy-platform.sh" build)"
+  gbx_remember GBX_RELEASE_TAG "$tag"
   echo "Images built: release $GBX_RELEASE_TAG."
 }
 
@@ -109,7 +128,9 @@ phase_fabric() {
       -f "$BICEP/agents/fabric-resume.bicep" -p "$BICEP/agents/fabric-resume.bicepparam" -o none
   fi
   if [ -n "${GBX_WHATIF:-}" ]; then return; fi
-  gbx_remember GBX_FABRIC_WORKSPACE_ID "$(python3 "$SCRIPTS/fabric_workspace.py" ensure)"
+  local workspace
+  workspace="$(python3 "$SCRIPTS/fabric_workspace.py" ensure)"
+  gbx_remember GBX_FABRIC_WORKSPACE_ID "$workspace"
   echo "Fabric workspace: $GBX_FABRIC_WORKSPACE_ID"
 }
 
@@ -153,7 +174,7 @@ PY
   else
     echo "No published library manifest yet, so the knowledge model leaves the library out; rerun this phase after publishing."
   fi
-  (cd "$fw" && "$py" -m producers --bundle ../build/bundle --out ../build/landing)
+  (cd "$fw" && "$py" -m producers --bundle ../build/bundle --out build/landing)   # config/geobasin.json's landing_root
   # A graph model created through the REST API loads data only after someone has opened it once in the Fabric portal
   # (Microsoft Learn, Manage data in graph). Everything before the load is published by then, so on that one known stop the
   # phase records the items and lets the deployment go on; the graph's knowledge tools wait until the phase reruns.
@@ -187,13 +208,17 @@ PY
 }
 
 phase_signin() {
-  gbx_remember GBX_SITE_APP_ID "$("$SCRIPTS/site-signin.sh" | tail -1)"
+  local app
+  app="$("$SCRIPTS/site-signin.sh" | tail -1)"
+  gbx_remember GBX_SITE_APP_ID "$app"
   echo "Sign-in registration: $GBX_SITE_APP_ID"
 }
 
 phase_site() {
   if [ -z "${GBX_SITE_TAG:-}" ] || [ "${GBX_REBUILD_SITE:-}" = "1" ]; then
-    gbx_remember GBX_SITE_TAG "$("$SCRIPTS/deploy-site.sh" build)"
+    local tag
+    tag="$("$SCRIPTS/deploy-site.sh" build)"
+    gbx_remember GBX_SITE_TAG "$tag"
   fi
   "$SCRIPTS/deploy-site.sh" deploy "$GBX_SITE_TAG"
 }
@@ -203,7 +228,9 @@ phase_hosted() {
   if gbx_fabric_enabled; then gbx_require GBX_FABRIC_WORKSPACE_ID GBX_FABRIC_ONTOLOGY_ID; fi
   gbx_agents
   python3 "$GBX_ROOT/services/scientists/deploy_hosted.py"
-  gbx_remember GBX_AGENT_IDENTITIES "$(python3 "$GBX_ROOT/services/scientists/deploy_hosted.py" --identities)"
+  local identities
+  identities="$(python3 "$GBX_ROOT/services/scientists/deploy_hosted.py" --identities)"
+  gbx_remember GBX_AGENT_IDENTITIES "$identities"
   echo "Hosted agents' identities: $GBX_AGENT_IDENTITIES"
   GBX_REBUILD_SITE=0 phase_site   # the site now admits the agents and grants their access
 }

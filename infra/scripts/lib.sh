@@ -20,6 +20,10 @@ if [ -f "$GBX_GENERATED_FILE" ]; then . "$GBX_GENERATED_FILE"; fi
 set +a
 
 : "${GBX_SUBSCRIPTION_ID:?Set GBX_SUBSCRIPTION_ID in $GBX_ENV_FILE}"
+if ! python3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)' 2>/dev/null; then
+  echo "The deployment scripts need Python 3.11 or later as python3; found $(python3 --version 2>&1). Put a newer python3 first on PATH." >&2
+  return 1 2>/dev/null || false
+fi
 export GBX_AGENTS_SUBSCRIPTION_ID="${GBX_AGENTS_SUBSCRIPTION_ID:-$GBX_SUBSCRIPTION_ID}"
 export GBX_LOCATION="${GBX_LOCATION:-westus3}"
 export GBX_BUDGET_START_DATE="${GBX_BUDGET_START_DATE:-$(date -u +%Y-%m-01)}"

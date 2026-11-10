@@ -62,7 +62,8 @@ FOUNDRY_ENDPOINT = _setting("GBX_FOUNDRY_ENDPOINT").rstrip("/")
 REQUIRED = ("GBX_TENANT_ID", "GBX_SUBSCRIPTION_ID", "GBX_FABRIC_WORKSPACE_ID", "GBX_STORAGE_ACCOUNT", "GBX_SEARCH_NAME",
             "GBX_DOCINTEL_ENDPOINT", "GBX_FOUNDRY_ENDPOINT")
 LAKEHOUSE = "geobasin_library_lh"
-CONNECTION = "gbx-library-blob-workspace-identity"
+# Fabric connections are tenant-wide, so the name carries the storage account to keep two deployments in one tenant apart.
+CONNECTION = f"gbx-library-blob-{STORAGE_ACCOUNT}"
 SHORTCUTS = ("raw", "processed", "manifests")
 PUSH_INDEX, INDEX = "gbx-evidence-v2", "gbx-evidence-onelake"
 DATASOURCE = INDEXER = "gbx-library-gold"
@@ -159,7 +160,7 @@ def lakehouse(client: FabricClient, create: bool) -> dict[str, Any] | None:
     status, _, body = call("POST", fabric_url(f"/workspaces/{WORKSPACE}/lakehouses"), resource=FABRIC_RESOURCE, body={
         "displayName": LAKEHOUSE, "creationPayload": {"enableSchemas": True},
         "description": "GeoBasin version 2 library in OneLake: bronze shortcuts to the clean files, silver and gold Delta tables, "
-                       "and the gold evidence files the OneLake files indexer reads (docs/v2/LIBRARY_ONELAKE.md)."})
+                       "and the gold evidence files the OneLake files indexer reads (docs/LIBRARY_ONELAKE.md)."})
     need(status in (200, 201, 202), "The library lakehouse could not be created", body)
     for _ in range(30):
         found = client.find_item(LAKEHOUSE, "Lakehouse")
@@ -173,6 +174,9 @@ def connection(create: bool) -> dict[str, Any] | None:
     status, _, body = call("GET", fabric_url("/connections"), resource=FABRIC_RESOURCE)
     need(status == 200, "Connections could not be listed", body)
     found = next((c for c in body["value"] if c.get("displayName") == CONNECTION), None)
+    if found:
+        path = str((found.get("connectionDetails") or {}).get("path", "")).lower()
+        need(f"//{STORAGE_ACCOUNT.lower()}.blob." in path, f"The connection {CONNECTION} points at another storage account", path)
     if found or not create:
         return found
     status, _, body = call("POST", fabric_url("/connections"), resource=FABRIC_RESOURCE, body={
@@ -196,10 +200,15 @@ def shortcuts(lakehouse_id: str, connection_id: str | None) -> list[str]:
         for name in SHORTCUTS:
             if f"Files/bronze/{name}" in have:
                 continue
-            status, _, made = call("POST", base + "?shortcutConflictPolicy=Abort", resource=FABRIC_RESOURCE, body={
-                "path": "Files/bronze", "name": name, "target": {"azureBlobStorage": {
-                    "location": f"https://{STORAGE_ACCOUNT}.blob.core.windows.net", "subpath": f"/{name}",
-                    "connectionId": connection_id}}})
+            # A new role assignment takes a few minutes to reach storage, so a fresh deployment's first try can be refused.
+            for _ in range(12):
+                status, _, made = call("POST", base + "?shortcutConflictPolicy=Abort", resource=FABRIC_RESOURCE, body={
+                    "path": "Files/bronze", "name": name, "target": {"azureBlobStorage": {
+                        "location": f"https://{STORAGE_ACCOUNT}.blob.core.windows.net", "subpath": f"/{name}",
+                        "connectionId": connection_id}}})
+                if status in (200, 201) or "Unauthorized" not in str(made):
+                    break
+                time.sleep(30)
             need(status in (200, 201), f"The {name} shortcut could not be created", made)
             have.add(f"Files/bronze/{name}")
     return sorted(have)
@@ -548,7 +557,7 @@ notebookutils.notebook.exit(json.dumps(summary))
 DESCRIPTIONS = {
     "silver": ("# Library silver\n\nRead every extraction that `gbx-process` wrote, through the bronze shortcut to the closed "
                "storage account, check each page and chunk as the live publisher does, and append the new extractions to "
-               "`silver.documents`, `silver.pages` and `silver.chunks` (docs/v2/LIBRARY_ONELAKE.md).\n"),
+               "`silver.documents`, `silver.pages` and `silver.chunks` (docs/LIBRARY_ONELAKE.md).\n"),
     "gold": ("# Library gold\n\nRead the current publication manifest and its history through the bronze shortcut, bind every "
              "selected extraction to silver, rewrite `gold.sources`, `gold.documents` and `gold.chunks`, and write one evidence "
              "file per published passage for the OneLake files indexer (decision D5).\n"),
@@ -592,7 +601,7 @@ def build_pipeline(notebook_ids: dict[str, str], lakehouse_id: str) -> dict[str,
                     "raise_errors": {"value": "true", "type": "string"}}}}
     return {"properties": {
         "description": "The library in OneLake: silver from every extraction, then gold from the current publication manifest "
-                       "(docs/v2/LIBRARY_ONELAKE.md). fabric_library.py run then runs the OneLake files indexer and moves the gold pointer.",
+                       "(docs/LIBRARY_ONELAKE.md). fabric_library.py run then runs the OneLake files indexer and moves the gold pointer.",
         "activities": [activity("Build silver", notebook_ids["silver"], None),
                        activity("Build gold", notebook_ids["gold"], "Build silver")]}}
 
@@ -636,7 +645,7 @@ def ensure_search(lakehouse_id: str) -> None:
     need(status in (200, 201, 204), "The OneLake-fed index could not be created", body)
     status, body = search("PUT", f"/datasources/{DATASOURCE}", {
         "name": DATASOURCE, "type": "onelake",
-        "description": "Gold evidence files in the GeoBasin library lakehouse (docs/v2/LIBRARY_ONELAKE.md)",
+        "description": "Gold evidence files in the GeoBasin library lakehouse (docs/LIBRARY_ONELAKE.md)",
         "credentials": {"connectionString": f"ResourceId={WORKSPACE}"},
         "container": {"name": lakehouse_id, "query": EVIDENCE_FOLDER}})
     need(status in (200, 201, 204), "The OneLake data source could not be created", body)
