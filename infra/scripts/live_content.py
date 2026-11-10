@@ -224,7 +224,7 @@ def manifest(out: pathlib.Path) -> int:
 
 def load_settings() -> None:
     """Run by hand, the script has none of the settings deploy.sh exports, so it reads them through lib.sh the same way."""
-    if os.environ.get("GBX_SUBSCRIPTION_ID"):
+    if os.environ.get("GBX_SUBSCRIPTION_ID") or not (ROOT / "infra" / "config" / "environment.env").is_file():
         return
     out = subprocess.run(["bash", "-c", '. "$1" >/dev/null && env -0', "bash", str(ROOT / "infra" / "scripts" / "lib.sh")],
                          capture_output=True, check=False)
