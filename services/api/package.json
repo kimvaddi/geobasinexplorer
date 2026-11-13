@@ -24,7 +24,7 @@
     "@azure/storage-blob": "12.34.0",
     "@azure/storage-queue": "12.32.0",
     "@fastify/multipart": "10.1.6",
-    "@fastify/static": "10.1.7",
+    "@fastify/static": "10.1.10",
     "fastify": "5.12.7",
     "openai": "7.43.0",
     "unpdf": "1.6.2"
