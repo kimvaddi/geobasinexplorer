@@ -3,6 +3,7 @@
   "version": "0.13.49",
   "private": true,
   "description": "GeoBasin Explorer AI cloud service: serves the cloud build of the app and its API on Azure Container Apps.",
+  "author": "Kim Vaddi (https://github.com/kimvaddi)",
   "type": "module",
   "engines": {
     "node": ">=22"

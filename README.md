@@ -6,6 +6,7 @@
 
 A multimodal AI assistant for oil, gas and energy-transition teams, built on Microsoft Azure and Microsoft Fabric.
 
+[![Built by Kim Vaddi](https://img.shields.io/badge/Built_by-Kim_Vaddi-0B5FFF?style=flat-square)](AUTHORS.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-F5C518?style=flat-square)](LICENSE)
 [![CI](https://github.com/kimvaddi/geobasinexplorer/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/kimvaddi/geobasinexplorer/actions/workflows/ci.yml)
 ![Microsoft Azure](https://img.shields.io/badge/Microsoft_Azure-0078D4?style=flat-square)
@@ -261,3 +262,5 @@ That vision became reality when **Kim Vaddi** (Microsoft) partnered with Jorge t
 Today, GeoBasin Explorer AI pairs hosted AI agents in Microsoft Foundry with an independent validator that checks every statement. A governed knowledge model in Microsoft Fabric gives people and agents a shared understanding of the basin through Fabric IQ. Azure Document Intelligence and Azure AI Search supply the multimodal evidence behind each answer. Identity, network, security and cost controls let organizations run it inside their own tenant, while Bicep and Terraform templates make every deployment repeatable, whether greenfield or brownfield.
 
 The result is a fully tested, deployable solution that shows what low-code vision and pro-code engineering can achieve together.
+
+GeoBasin Explorer AI is built and maintained by **Kim Vaddi**. If you use, fork or redistribute it, keep the credit in [AUTHORS.md](AUTHORS.md) and the copyright notice in [LICENSE](LICENSE), and cite it with [CITATION.cff](CITATION.cff).

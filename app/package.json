@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.8.0",
   "description": "Map-first geoscience prototype on public Australian basin data. Builds to one offline HTML file.",
+  "author": "Kim Vaddi (https://github.com/kimvaddi)",
   "type": "module",
   "engines": {
     "node": ">=20.19.0"

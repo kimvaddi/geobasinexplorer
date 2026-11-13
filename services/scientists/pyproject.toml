@@ -2,6 +2,7 @@
 name = "gbx-scientists"
 version = "0.1.0"
 description = "GeoBasin Explorer AI version 2: the scientist squad as Microsoft Agent Framework workflows hosted in Microsoft Foundry"
+authors = [{ name = "Kim Vaddi" }]
 requires-python = ">=3.11"
 # Agent Framework's Foundry hosting integration is prerelease, so every package is pinned and upgrades are tested first
 # (docs/v2/FOUNDRY_AGENTS.md, Risks).

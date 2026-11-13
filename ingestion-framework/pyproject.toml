@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "ontology-ingest"
 version = "0.1.0"
 description = "Deterministic entity and relationship ingestion for Fabric IQ ontologies"
+authors = [{ name = "Kim Vaddi" }]
 requires-python = ">=3.10"
 dependencies = ["pyarrow>=14"]
 

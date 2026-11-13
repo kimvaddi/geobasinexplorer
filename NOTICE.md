@@ -2,6 +2,10 @@
 
 GeoBasin Explorer AI's own source code and documentation are released under the MIT License ([LICENSE](LICENSE)). It also includes or uses the following third-party data and software, which remain under their own licenses rather than the MIT License. Each source's license applies to its content; [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md) describes every source in full.
 
+## Author
+
+GeoBasin Explorer AI is built and maintained by Kim Vaddi ([AUTHORS.md](AUTHORS.md)). The original prototype was built by Jorge Peña Alarcón (Microsoft). The MIT License requires the copyright notice in [LICENSE](LICENSE) to stay with every copy or substantial portion of the software. Please keep this credit with it.
+
 ## Data
 
 - **Geoscience Australia.** © Commonwealth of Australia (Geoscience Australia). Basin packages from the TEGI program (eCat 147459, 147460, 147461 and 147462), gravity, airborne electromagnetic and bathymetry products and their catalogue records, licensed under the Creative Commons Attribution 4.0 International licence (CC BY 4.0). OzTemp interpreted temperature at 5 km and well temperature data (Gerner and Holgate), © Commonwealth of Australia (Geoscience Australia) 2010, licensed under CC BY 3.0 Australia.

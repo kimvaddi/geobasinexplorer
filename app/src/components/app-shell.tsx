@@ -33,6 +33,7 @@ export function AppShell() {
         </>}
         {tagline && <span className="hidden text-sm text-header-foreground/75 sm:inline">{tagline}</span>}
         <span className="ml-auto hidden text-xs text-header-foreground/70 md:inline">{note.lead && <><span className="font-semibold text-brand-highlight">{note.lead}</span> · </>}{CLOUD ? <>{note.cloud}{me ? <> · {me.name} · <a className="underline underline-offset-2 hover:text-header-foreground" href="/.auth/logout?post_logout_redirect_uri=/">Sign out</a></> : null}</> : note.offline}</span>
+        <span className="hidden shrink-0 whitespace-nowrap text-[11px] text-header-foreground/60 lg:inline" data-author="Kim Vaddi" title="GeoBasin Explorer AI is built and maintained by Kim Vaddi">Built by Kim Vaddi</span>
       </header>
       <main className="flex flex-1 flex-col">
         <motion.div

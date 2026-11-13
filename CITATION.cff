@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use, fork or adapt this work, please credit Kim Vaddi as its author."
+title: GeoBasin Explorer AI
+type: software
+authors:
+  - family-names: Vaddi
+    given-names: Kim
+    alias: kimvaddi
+repository-code: "https://github.com/kimvaddi/geobasinexplorer"
+date-released: 2026-11-13
+license: MIT

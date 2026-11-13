@@ -26,6 +26,7 @@ html = html.replace('<meta charset="UTF-8" />', () => `<meta charset="UTF-8" />\
 
 const credit = `<!--
   GeoBasin Explorer AI. Single offline file: no login, no network calls, no telemetry.
+  Built and maintained by Kim Vaddi (https://github.com/kimvaddi). Keep this attribution when you copy or redistribute this file.
   Original prototype built by Jorge Peña Alarcón, Microsoft. Architected and enhanced into an Azure platform by Kim Vaddi, Microsoft.
   Optional copilot voice input uses the browser's own speech service and stays off until the user turns it on.
   Data: Geoscience Australia (CC BY 4.0); Department for Energy and Mining, South Australia, PEPS SA (CC BY);

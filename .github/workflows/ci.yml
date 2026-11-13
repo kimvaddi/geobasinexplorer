@@ -42,6 +42,8 @@ jobs:
         run: |
           if grep -q "atlas.microsoft.com" dist/geobasin-explorer-ai.html; then echo "Azure Maps found in the offline file"; exit 1; fi
           if grep -q -E "arcgis\.com|/api/basemap/" dist/geobasin-explorer-ai.html; then echo "Esri base maps found in the offline file"; exit 1; fi
+      - name: The offline file credits Kim Vaddi
+        run: grep -q "Built and maintained by Kim Vaddi" dist/geobasin-explorer-ai.html
       - name: Build the cloud UI
         run: npm run build:cloud
       - name: Answers cite a source or say not found
@@ -209,6 +211,8 @@ jobs:
           GBX_LIVE_SOURCES="$(sed -n 's/^GBX_LIVE_SOURCES=//p' infra/config/environment.example.env)" python3 infra/scripts/live_content.py plan
       - name: No withheld source content (fingerprints only)
         run: node tools/check-public-data.mjs
+      - name: Author attribution to Kim Vaddi is intact
+        run: node tools/check-attribution.mjs
       - name: No secrets in tracked files
         run: |
           if git grep -n -I -E "gh[pousr]_[A-Za-z0-9]{20,}|AccountKey=|SharedAccessSignature|-----BEGIN [A-Z ]*PRIVATE KEY|client_secret\s*[:=]\s*['\"][A-Za-z0-9~._-]{20,}" -- . ':!*.html' ':!.github/workflows/ci.yml'; then echo "Possible secret found"; exit 1; fi
