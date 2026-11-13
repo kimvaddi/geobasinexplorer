@@ -6,7 +6,7 @@ All data in GeoBasin Explorer AI comes from public sources. Every source carries
 |---|---|
 | Bundled datasets (machine-readable) | [data/sources/manifest.csv](../data/sources/manifest.csv) |
 | Live library, with each file's pinned checksum and the basis on which its license was confirmed | [services/api/src/live/pipeline-registry.ts](../services/api/src/live/pipeline-registry.ts) |
-| Required attributions | [NOTICE.md](../NOTICE.md) |
+| Required attributions | [NOTICE](../NOTICE) |
 
 ## How sources are governed
 

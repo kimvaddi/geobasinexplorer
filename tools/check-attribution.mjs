@@ -14,7 +14,7 @@ const files = [
   "README.md",
   "AUTHORS.md",
   "CITATION.cff",
-  "NOTICE.md",
+  "NOTICE",
   "LICENSE",
   ".github/copilot-instructions.md",
   "app/index.html",
@@ -41,7 +41,10 @@ assert.match(read("app/index.html"), /<meta name="author" content="Kim Vaddi/, "
 assert.match(read("app/src/components/app-shell.tsx"), /data-author="Kim Vaddi"[^>]*>Built by Kim Vaddi</, "the app header lost the Built by Kim Vaddi mark");
 assert.equal((read("app/src/pages/home.tsx").match(/Author and maintainer/g) ?? []).length, 2, "home.tsx must credit Kim Vaddi in the About dialog and the export");
 assert.match(read("app/scripts/inline-single-file.mjs"), /Built and maintained by Kim Vaddi/, "the offline file credit comment no longer names Kim Vaddi");
-assert.match(read("LICENSE"), /^Copyright \(c\) \d{4} Kim Vaddi$/m, "LICENSE copyright line no longer names Kim Vaddi");
+assert.match(read("LICENSE"), /^\s*Apache License\s+Version 2\.0, January 2004/, "LICENSE is no longer the Apache License 2.0");
+assert.match(read("LICENSE"), /^\s*Copyright \d{4} Kim Vaddi\s*$/m, "LICENSE copyright line no longer names Kim Vaddi");
+assert.match(read("NOTICE"), /^Copyright \d{4} Kim Vaddi$/m, "NOTICE copyright line no longer names Kim Vaddi");
+assert.match(read("NOTICE"), /Built and maintained by Kim Vaddi/, "NOTICE no longer credits Kim Vaddi as builder and maintainer");
 
 // When the offline file has been built, it must carry the credit too.
 const offline = path.join(repo, "app/dist/geobasin-explorer-ai.html");

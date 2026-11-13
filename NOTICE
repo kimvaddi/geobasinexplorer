@@ -1,0 +1,57 @@
+GeoBasin Explorer AI
+Copyright 2026 Kim Vaddi
+
+Built and maintained by Kim Vaddi (https://github.com/kimvaddi). The original prototype was built by
+Jorge Peña Alarcón (Microsoft).
+
+Licensed under the Apache License, Version 2.0 (see LICENSE). Under section 4(d) of that license,
+anyone who distributes this work or a Derivative Work of it must include a readable copy of the
+attribution notices in this NOTICE file. Please keep this credit to Kim Vaddi with every copy.
+
+AUTHOR
+
+GeoBasin Explorer AI is built and maintained by Kim Vaddi. See AUTHORS.md and CITATION.cff.
+
+THIRD-PARTY DATA
+
+The project also includes or uses the following third-party data and software, which remain under
+their own licenses rather than the Apache License. Each source's license applies to its content;
+docs/DATA_SOURCES.md describes every source in full.
+
+- Geoscience Australia. © Commonwealth of Australia (Geoscience Australia). Basin packages from the
+  TEGI program (eCat 147459, 147460, 147461 and 147462), gravity, airborne electromagnetic and
+  bathymetry products and their catalogue records, licensed under the Creative Commons Attribution
+  4.0 International licence (CC BY 4.0). OzTemp interpreted temperature at 5 km and well temperature
+  data (Gerner and Holgate), © Commonwealth of Australia (Geoscience Australia) 2010, licensed under
+  CC BY 3.0 Australia.
+- Department for Energy and Mining, South Australia. Marabooka 1 and Habanero 1 well files from the
+  PEPS SA database, licensed under CC BY 4.0.
+- GFZ German Research Centre for Geosciences. World Stress Map Database Release 2025
+  (https://doi.org/10.5880/WSM.2025.001), licensed under CC BY 4.0.
+- Toitū Te Whenua Land Information New Zealand. Geodetic standards LINZS25000, LINZS25002 and
+  LINZS25009, fact sheets LINZG25700, LINZG25702 and LINZG25703, the ITRF to NZGD2000 transformation
+  guidance, and J. Hannah, An Assessment of New Zealand's Height Systems and Options for a Future
+  Height Datum (2001), licensed under CC BY 4.0.
+- Intergovernmental Committee on Surveying and Mapping. GDA2020 Technical Manual, version 1.8
+  (2024), used under the terms stated in the manual.
+- New Zealand Petroleum and Minerals. New Zealand's Petroleum Basins, Parts One and Two (2014).
+  Crown copyright, reproduced with permission; source: the New Zealand Petroleum and Minerals
+  website at www.nzpam.govt.nz.
+- Natural Earth. Made with Natural Earth. Free vector and raster map data at naturalearthdata.com,
+  in the public domain.
+- Copernicus. When the optional Planetary Computer overlays are enabled: contains modified
+  Copernicus Sentinel data and Copernicus DEM data, processed by the European Space Agency, subject
+  to the Copernicus licence terms.
+
+THIRD-PARTY SOFTWARE
+
+The application and services depend on open-source packages listed in each component's package.json,
+pyproject.toml or requirements files, each under its own license. The Foundry agent template in
+infra/bicep/agents is adapted from Microsoft's official Foundry samples
+(github.com/microsoft-foundry/foundry-samples), MIT License.
+
+TRADEMARKS
+
+Microsoft, Azure, Microsoft Fabric, Microsoft Entra and related names are trademarks of the
+Microsoft group of companies. Other names are the trademarks of their respective owners. Their use
+here does not imply endorsement.

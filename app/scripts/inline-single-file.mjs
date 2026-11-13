@@ -33,7 +33,7 @@ const credit = `<!--
   Sources whose reuse terms are unconfirmed are withheld from this file, as in the cloud build;
   OzTemp (Geoscience Australia, CC BY 3.0 AU); World Stress Map Database Release 2025 (GFZ); Natural Earth (public domain).
   Values were read from the public documents before packaging and carry a confidence. Nothing calls a live service.
-  Full list: DATA_SOURCES.md and NOTICE.md in the repository.
+  Full list: DATA_SOURCES.md and NOTICE in the repository. Licensed under the Apache License 2.0.
 -->
 `;
 html = html.replace("<!doctype html>", () => "<!doctype html>\n" + credit);

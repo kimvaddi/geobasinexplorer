@@ -8,4 +8,4 @@ authors:
     alias: kimvaddi
 repository-code: "https://github.com/kimvaddi/geobasinexplorer"
 date-released: 2026-11-13
-license: MIT
+license: Apache-2.0

@@ -5,8 +5,8 @@ GeoBasin Explorer AI is built and maintained by **Kim Vaddi**.
 - **Author and maintainer:** Kim Vaddi ([github.com/kimvaddi](https://github.com/kimvaddi))
 - **Original prototype:** Jorge Peña Alarcón (Microsoft)
 
-Copyright (c) 2026 Kim Vaddi. Released under the [MIT License](LICENSE), which requires this copyright notice to stay with every copy or substantial portion of the software.
+Copyright 2026 Kim Vaddi. Released under the [Apache License 2.0](LICENSE). Section 4(d) of that license requires anyone who redistributes this work, or a derivative of it, to keep the attribution notices in [NOTICE](NOTICE).
 
 ## Keep the credit
 
-If you clone, fork, copy or redistribute this project, or build on it, keep this file and credit **Kim Vaddi** as the author. The same credit appears in the README badge, [NOTICE.md](NOTICE.md), [CITATION.cff](CITATION.cff), the package metadata, the app's header and About dialog, and the header of the offline HTML file. `node tools/check-attribution.mjs` checks that every one of them is still in place.
+If you clone, fork, copy or redistribute this project, or build on it, keep this file and credit **Kim Vaddi** as the author. The same credit appears in the README badge, [NOTICE](NOTICE), [CITATION.cff](CITATION.cff), the package metadata, the app's header and About dialog, and the header of the offline HTML file. `node tools/check-attribution.mjs` checks that every one of them is still in place.
