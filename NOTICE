@@ -1,12 +1,13 @@
 GeoBasin Explorer AI
-Copyright 2026 Kim Vaddi
+Copyright (c) 2026 Kim Vaddi
 
 Built and maintained by Kim Vaddi (https://github.com/kimvaddi). The original prototype was built by
 Jorge Peña Alarcón (Microsoft).
 
-Licensed under the Apache License, Version 2.0 (see LICENSE). Under section 4(d) of that license,
-anyone who distributes this work or a Derivative Work of it must include a readable copy of the
-attribution notices in this NOTICE file. Please keep this credit to Kim Vaddi with every copy.
+Licensed under the MIT License (see LICENSE). Kim Vaddi keeps the copyright. The MIT License
+requires the copyright notice "Copyright (c) 2026 Kim Vaddi" and the license text to be included in
+all copies or substantial portions of the software. Please keep this credit to Kim Vaddi with every
+copy.
 
 AUTHOR
 
@@ -15,7 +16,7 @@ GeoBasin Explorer AI is built and maintained by Kim Vaddi. See AUTHORS.md and CI
 THIRD-PARTY DATA
 
 The project also includes or uses the following third-party data and software, which remain under
-their own licenses rather than the Apache License. Each source's license applies to its content;
+their own licenses rather than the MIT License. Each source's license applies to its content;
 docs/DATA_SOURCES.md describes every source in full.
 
 - Geoscience Australia. © Commonwealth of Australia (Geoscience Australia). Basin packages from the

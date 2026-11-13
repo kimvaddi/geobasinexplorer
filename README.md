@@ -7,7 +7,7 @@
 A multimodal AI assistant for oil, gas and energy-transition teams, built on Microsoft Azure and Microsoft Fabric.
 
 [![Built by Kim Vaddi](https://img.shields.io/badge/Built_by-Kim_Vaddi-0B5FFF?style=flat-square)](AUTHORS.md)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-F5C518?style=flat-square)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-F5C518?style=flat-square)](LICENSE)
 [![CI](https://github.com/kimvaddi/geobasinexplorer/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/kimvaddi/geobasinexplorer/actions/workflows/ci.yml)
 ![Microsoft Azure](https://img.shields.io/badge/Microsoft_Azure-0078D4?style=flat-square)
 ![Microsoft Foundry](https://img.shields.io/badge/Microsoft_Foundry-7A4CC2?style=flat-square)
@@ -236,7 +236,7 @@ The [deployment guide](docs/DEPLOYMENT.md) covers prerequisites, quotas, each ph
 
 ## Data and license
 
-- **Code and documentation** are released under the [Apache License 2.0](LICENSE). Anyone who redistributes them, changed or unchanged, must keep the attribution notices in [NOTICE](NOTICE).
+- **Code and documentation** are released under the [MIT License](LICENSE). Copyright (c) 2026 Kim Vaddi. Any copy, changed or unchanged, must keep that copyright notice and the license text.
 - **Data** keeps the license its publisher chose. All data comes from public sources, including Geoscience Australia, the Department for Energy and Mining of South Australia, Toitū Te Whenua Land Information New Zealand, New Zealand Petroleum and Minerals, the Intergovernmental Committee on Surveying and Mapping, the World Stress Map and Natural Earth.
 - **A license gate** in the build withholds any source whose reuse terms are not confirmed, so the bundled data and the answers carry only content that may be redistributed.
 
@@ -263,4 +263,4 @@ Today, GeoBasin Explorer AI pairs hosted AI agents in Microsoft Foundry with an 
 
 The result is a fully tested, deployable solution that shows what low-code vision and pro-code engineering can achieve together.
 
-GeoBasin Explorer AI is built and maintained by **Kim Vaddi**. If you use, fork or redistribute it, keep the credit in [AUTHORS.md](AUTHORS.md) and the attribution notices in [NOTICE](NOTICE), as the [Apache License 2.0](LICENSE) requires, and cite it with [CITATION.cff](CITATION.cff).
+GeoBasin Explorer AI is built and maintained by **Kim Vaddi**. If you use, fork or redistribute it, keep the copyright notice in [LICENSE](LICENSE), as the MIT License requires, keep the credit in [AUTHORS.md](AUTHORS.md) and [NOTICE](NOTICE), and cite it with [CITATION.cff](CITATION.cff).
