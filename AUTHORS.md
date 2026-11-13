@@ -3,9 +3,10 @@
 GeoBasin Explorer AI is built and maintained by **Kim Vaddi**.
 
 - **Author and maintainer:** Kim Vaddi ([github.com/kimvaddi](https://github.com/kimvaddi))
+- **Copyright holder and licensor:** Kim Vaddi
 - **Original prototype:** Jorge Peña Alarcón (Microsoft)
 
-Copyright (c) 2026 Kim Vaddi. Released under the [MIT License](LICENSE). Kim Vaddi keeps the copyright, and the license requires every copy, or substantial portion, of this work to keep that copyright notice and the license text.
+Copyright (c) 2026 Kim Vaddi. Licensed by Kim Vaddi under the [MIT License](LICENSE). Kim Vaddi keeps the copyright, and the license requires every copy, or substantial portion, of this work to keep that copyright notice and the license text.
 
 ## Keep the credit
 

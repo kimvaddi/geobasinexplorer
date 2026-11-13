@@ -7,7 +7,7 @@
 A multimodal AI assistant for oil, gas and energy-transition teams, built on Microsoft Azure and Microsoft Fabric.
 
 [![Built by Kim Vaddi](https://img.shields.io/badge/Built_by-Kim_Vaddi-0B5FFF?style=flat-square)](AUTHORS.md)
-[![License: MIT](https://img.shields.io/badge/License-MIT-F5C518?style=flat-square)](LICENSE)
+[![License: MIT, licensed by Kim Vaddi](https://img.shields.io/badge/License-MIT_%C2%B7_Kim_Vaddi-F5C518?style=flat-square)](LICENSE)
 [![CI](https://github.com/kimvaddi/geobasinexplorer/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/kimvaddi/geobasinexplorer/actions/workflows/ci.yml)
 ![Microsoft Azure](https://img.shields.io/badge/Microsoft_Azure-0078D4?style=flat-square)
 ![Microsoft Foundry](https://img.shields.io/badge/Microsoft_Foundry-7A4CC2?style=flat-square)
@@ -236,7 +236,7 @@ The [deployment guide](docs/DEPLOYMENT.md) covers prerequisites, quotas, each ph
 
 ## Data and license
 
-- **Code and documentation** are released under the [MIT License](LICENSE). Copyright (c) 2026 Kim Vaddi. Any copy, changed or unchanged, must keep that copyright notice and the license text.
+- **Code and documentation** are licensed by Kim Vaddi under the [MIT License](LICENSE). Copyright (c) 2026 Kim Vaddi. Any copy, changed or unchanged, must keep that copyright notice and the license text.
 - **Data** keeps the license its publisher chose. All data comes from public sources, including Geoscience Australia, the Department for Energy and Mining of South Australia, Toitū Te Whenua Land Information New Zealand, New Zealand Petroleum and Minerals, the Intergovernmental Committee on Surveying and Mapping, the World Stress Map and Natural Earth.
 - **A license gate** in the build withholds any source whose reuse terms are not confirmed, so the bundled data and the answers carry only content that may be redistributed.
 

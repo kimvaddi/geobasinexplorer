@@ -33,7 +33,7 @@ const credit = `<!--
   Sources whose reuse terms are unconfirmed are withheld from this file, as in the cloud build;
   OzTemp (Geoscience Australia, CC BY 3.0 AU); World Stress Map Database Release 2025 (GFZ); Natural Earth (public domain).
   Values were read from the public documents before packaging and carry a confidence. Nothing calls a live service.
-  Full list: DATA_SOURCES.md and NOTICE in the repository. Copyright (c) 2026 Kim Vaddi. Licensed under the MIT License.
+  Full list: DATA_SOURCES.md and NOTICE in the repository. Copyright (c) 2026 Kim Vaddi. Licensed by Kim Vaddi under the MIT License.
 -->
 `;
 html = html.replace("<!doctype html>", () => "<!doctype html>\n" + credit);

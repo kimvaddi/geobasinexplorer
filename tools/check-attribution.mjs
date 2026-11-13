@@ -44,10 +44,19 @@ assert.match(read("app/scripts/inline-single-file.mjs"), /Built and maintained b
 assert.match(read("LICENSE"), /^MIT License\s/, "LICENSE is no longer the MIT License");
 assert.match(read("LICENSE"), /^Copyright \(c\) \d{4} Kim Vaddi$/m, "LICENSE copyright line no longer names Kim Vaddi");
 assert.match(read("NOTICE"), /^Copyright \(c\) \d{4} Kim Vaddi$/m, "NOTICE copyright line no longer names Kim Vaddi");
+assert.match(read("NOTICE"), /^Licensor: Kim Vaddi/m, "NOTICE no longer names Kim Vaddi as licensor");
+assert.match(read("AUTHORS.md"), /\*\*Copyright holder and licensor:\*\* Kim Vaddi/, "AUTHORS.md no longer names Kim Vaddi as licensor");
+assert.match(read("README.md"), /licensed by Kim Vaddi under the \[MIT License\]/, "README.md no longer says the code is licensed by Kim Vaddi");
+assert.equal((read("app/src/pages/home.tsx").match(/MIT License, licensed by Kim Vaddi/g) ?? []).length, 2, "home.tsx must name Kim Vaddi as licensor in the About dialog and the export");
+assert.match(read("app/scripts/inline-single-file.mjs"), /Licensed by Kim Vaddi under the MIT License/, "the offline file header no longer names Kim Vaddi as licensor");
 assert.match(read("NOTICE"), /Built and maintained by Kim Vaddi/, "NOTICE no longer credits Kim Vaddi as builder and maintainer");
 
 // When the offline file has been built, it must carry the credit too.
 const offline = path.join(repo, "app/dist/geobasin-explorer-ai.html");
-if (fs.existsSync(offline)) assert.ok(fs.readFileSync(offline, "utf8").includes(`Built and maintained by ${AUTHOR}`), "app/dist/geobasin-explorer-ai.html has no author credit; rebuild it with npm run build");
+if (fs.existsSync(offline)) {
+  const html = fs.readFileSync(offline, "utf8");
+  assert.ok(html.includes(`Built and maintained by ${AUTHOR}`), "app/dist/geobasin-explorer-ai.html has no author credit; rebuild it with npm run build");
+  assert.ok(html.includes(`Licensed by ${AUTHOR} under the MIT License`), "app/dist/geobasin-explorer-ai.html does not name the licensor; rebuild it with npm run build");
+}
 
 console.log(`Author attribution to ${AUTHOR} is intact in ${files.length} files.`);
